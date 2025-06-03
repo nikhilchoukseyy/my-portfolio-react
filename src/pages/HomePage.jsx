@@ -19,7 +19,7 @@ const fadeInUpAnimation = {
     y: 0,
     transition: {
       staggerChildren: 0.3,
-      duration:1
+      duration: 1
     },
   },
 }
@@ -83,7 +83,11 @@ const HomePage = () => {
           <motion.button drag className='text-2xl hover:-translate-y-1 transition duration-100'><MdOutlineEmail /></motion.button>
         </motion.div>
       </div>
-      <MobileNavbar />
+      <motion.div
+        initial={{opacity:0}}
+        animate={{opacity:1}}
+        transition={{delay:1,duration:1}}
+        className='w-[100%]'><MobileNavbar /></motion.div>
     </div>
   )
 }

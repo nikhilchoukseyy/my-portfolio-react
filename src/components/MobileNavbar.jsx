@@ -2,14 +2,18 @@ import React from 'react'
 import { motion } from "framer-motion";
 import { Link, useLoaderData } from 'react-router-dom'
 import { useLocation } from 'react-router-dom';
-
+import { IoMdHome } from "react-icons/io";
+import { GoProjectRoadmap } from "react-icons/go"
+import { FaTools } from "react-icons/fa";
+import { FaUniversity } from "react-icons/fa";
+import { MdContactEmergency } from "react-icons/md";
 
 let tabs = [
-  { id: 'home', label: 'Home', link: '/' },
-  { id: 'projects', label: 'Projects', link: '/projects' },
-  { id: 'skills', label: 'Skills', link: '/skills' },
-  { id: 'education', label: 'Education', link: '/education' },
-  { id: 'contact', label: 'Contact', link: '/contact' },
+  { id: 'home', label: 'Home', link: '/', icon: <IoMdHome /> },
+  { id: 'projects', label: 'Projects', link: '/projects', icon: <GoProjectRoadmap /> },
+  { id: 'skills', label: 'Skills', link: '/skills', icon: <FaTools /> },
+  { id: 'education', label: 'Education', link: '/education', icon: <FaUniversity /> },
+  { id: 'contact', label: 'Contact', link: '/contact', icon: <MdContactEmergency /> },
 ]
 
 
@@ -33,7 +37,7 @@ const MobileNavbar = () => {
   }
 
   return (
-    <div className={`w-max-auto ${heightClass} md:hidden flex justify-center items-center text-center px-2 py-2  bg-gray-900 rounded-full`}>
+    <div className={`w-max-auto ${heightClass} md:hidden flex justify-center items-center text-center px-2 py-2  bg-gray-900 rounded-full gap-1 `}>
       {tabs.map((tab) => (
         <Link
           key={tab.id}
@@ -51,7 +55,11 @@ const MobileNavbar = () => {
               transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
             />
           )}
-          <span className="relative z-10">{tab.label}</span>
+          <motion.span
+            className="relative z-10 flex flex-col items-center justify-center">
+            {tab.icon}
+            {tab.id}
+          </motion.span>
         </Link>
 
       ))}

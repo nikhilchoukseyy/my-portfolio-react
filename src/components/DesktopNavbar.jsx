@@ -2,13 +2,18 @@ import React from 'react'
 import { motion } from "framer-motion";
 import { Link, useLoaderData } from 'react-router-dom'
 import { useLocation } from 'react-router-dom';
+import { IoMdHome } from "react-icons/io";
+import { GoProjectRoadmap } from "react-icons/go"
+import { FaTools } from "react-icons/fa";
+import { FaUniversity } from "react-icons/fa";
+import { MdContactEmergency } from "react-icons/md";
 
 let tabs = [
-  { id: 'home', label: 'Home', link: '/' },
-  { id: 'projects', label: 'Projects', link: '/projects' },
-  { id: 'skills', label: 'Skills', link: '/skills' },
-  { id: 'education', label: 'Education', link: '/education' },
-  { id: 'contact', label: 'Contact', link: '/contact' },
+  { id: 'home', label: 'Home', link: '/', icon: <IoMdHome /> },
+  { id: 'projects', label: 'Projects', link: '/projects', icon: <GoProjectRoadmap /> },
+  { id: 'skills', label: 'Skills', link: '/skills', icon: <FaTools /> },
+  { id: 'education', label: 'Education', link: '/education', icon: <FaUniversity /> },
+  { id: 'contact', label: 'Contact', link: '/contact', icon: <MdContactEmergency /> },
 ]
 
 
@@ -27,14 +32,14 @@ const DesktopNavbar = () => {
   return (
     <nav className='h-[10dvh] w-[100%] justify-center px-8 py-8 mb-8 flex flex-row items-center text-center md:justify-between'>
       <span className='text-2xl '>nikhil<span className='text-blue-500'>chouksey</span></span>
-      <div className="hidden sm:block  justify-center items-center p-4 space-x-3">
+      <div className="hidden sm:flex  justify-center items-center p-4 space-x-3">
         {tabs.map((tab) => (
           <Link
             key={tab.id}
             to={`${tab.link}`}
             onClick={() => handleTabClick(tab.id)}
             className={`${activeTab === tab.id ? "text-blue-500" : "text-white/70"
-              } relative px-4 py-1 text-sm font-medium transition text-white/70 text-blue-500 hover:text-white`}
+              } relative px-4 py-1 flex flex-row items-center justify-center  text-sm font-medium transition text-white/70 text-blue-500 hover:text-white`}
           >
             {activeTab === tab.id && (
               <motion.span
@@ -43,7 +48,7 @@ const DesktopNavbar = () => {
                 transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
               />
             )}
-            {tab.label}
+            {tab.icon}{tab.id}
           </Link>
         ))}
       </div>
