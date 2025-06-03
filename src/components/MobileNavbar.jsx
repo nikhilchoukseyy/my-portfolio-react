@@ -47,7 +47,7 @@ const MobileNavbar = () => {
           {activeTab === tab.id && (
             <motion.span
               layoutId="bubble"
-              className="absolute inset-0 z-0 bg-white rounded-full"
+              className="absolute inset-0 z-2 bg-white rounded-full"
               transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
             />
           )}
