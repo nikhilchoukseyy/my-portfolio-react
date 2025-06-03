@@ -48,10 +48,8 @@ const HomePage = () => {
         </div>
 
 
-        <button className="flex flex-row bg-white bg-opacity-80 rounded-full px-4 py-2 text-black font-extrabold  transition transform duration-300 hover:bg-white hover:shadow-sm hover:shadow-blue-300 hover:bg-opacity-100 cursor-pointer  md:mt-4 md:mb-4 ">
-          <a className="flex flex-row gap-2 "
-            href=""
-            download="Nikhil_Chouksey_Resume">
+        <button className="flex flex-row bg-white bg-opacity-100 rounded-full px-4 py-2 text-black font-extrabold  transition transform duration-300 hover:bg-white hover:shadow-sm hover:shadow-blue-500 hover:bg-opacity-100 cursor-pointer  md:mt-4 md:mb-4 hover:scale-105 md:hover:scale-100">
+          <a className="flex flex-row gap-2 ">
             <span>Download Resume</span>
             <Download className='hover:translate-y-1 transition duration-300' />
           </a>
