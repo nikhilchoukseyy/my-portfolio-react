@@ -30,7 +30,7 @@ const DesktopNavbar = () => {
   }
 
   return (
-    <nav className='h-[10dvh] w-[100%] justify-center px-8 py-8 mb-8 flex flex-row items-center text-center md:justify-between'>
+    <nav className='w-full justify-center px-4 py-2 md:mb-12 flex flex-row items-center text-center md:justify-between'>
       <span className='text-2xl '>nikhil<span className='text-blue-500'>chouksey</span></span>
       <div className="hidden sm:flex  justify-center items-center p-4 space-x-3">
         {tabs.map((tab) => (
@@ -44,7 +44,7 @@ const DesktopNavbar = () => {
             {activeTab === tab.id && (
               <motion.span
                 layoutId="bubble"
-                className="absolute inset-0 z-10 bg-white mix-blend-difference rounded-full"
+                className="absolute inset-0 z-10 bg-white mix-blend-difference rounded-full "
                 transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
               />
             )}
