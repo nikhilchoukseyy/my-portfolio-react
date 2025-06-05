@@ -14,9 +14,9 @@ import FadeInUpAnimation from '../hooks/FadeInUpAnimation';
 const HomePage = () => {
 
   return (
-    <div className='bg-gray-950 min-h-screen w-full overflow-x-hidden flex flex-col items-center text-white font-mono'>
+    <div className='bg-gray-950 min-h-screen w-full overflow-x-hidden flex flex-col items-center text-white font-mono gap-4'>
       <DesktopNavbar />
-      <div className='flex flex-col items-center justify-center text-center gap-8 mt-12 md:mt-2 md:gap-4'>
+      <div className='flex flex-col items-center justify-center text-center gap-8 mt-24 md:mt-24 md:gap-4'>
         <motion.div
           variants={FadeInUpAnimation}
           initial="hidden"
@@ -49,7 +49,7 @@ const HomePage = () => {
         </div>
 
         <motion.button
-          className="flex flex-row bg-white bg-opacity-100 rounded-full px-4 py-2 text-black font-extrabold  transition transform hover:bg-white hover:shadow-sm hover:shadow-blue-500 hover:bg-opacity-100 cursor-pointer  md:mt-4 md:mb-4 hover:scale-105 md:hover:scale-100">
+          className="bg-white rounded-full px-4 py-2 text-black font-extrabold  transitionhover:bg-white hover:shadow-sm hover:shadow-blue-500 hover:bg-opacity-100 cursor-pointer  md:mt-4 md:mb-4 hover:scale-105 md:hover:scale-100">
           <a className="flex flex-row gap-2 ">
             <span>Download Resume</span>
             <Download className='hover:translate-y-1 transition duration-300' />
@@ -57,21 +57,30 @@ const HomePage = () => {
         </motion.button>
         <motion.div
           variants={FadeInUpAnimation}
-          drag
-          dragConstraints ={{top:0,left:0,bottom:0,right:0}}
-          dragElastic={2}
           initial="hidden"
           animate="show"
           className=' flex flex-row gap-4  '>
-          <motion.button drag className='text-2xl hover:-translate-y-1 transition duration-100'><FaGithub /></motion.button>
-          <motion.button drag className='text-2xl hover:-translate-y-1 transition duration-100'><CiLinkedin /></motion.button>
-          <motion.button drag className='text-2xl hover:-translate-y-1 transition duration-100'><MdOutlineEmail /></motion.button>
+          <motion.button
+            drag
+            dragConstraints={{ top: 0, left: 0, bottom: 0, right: 0 }}
+            dragElastic={2}
+            className='text-2xl hover:-translate-y-1 transition duration-100'><FaGithub /></motion.button>
+          <motion.button
+            drag
+            dragConstraints={{ top: 0, left: 0, bottom: 0, right: 0 }}
+            dragElastic={2}
+            className='text-2xl hover:-translate-y-1 transition duration-100'><CiLinkedin /></motion.button>
+          <motion.button
+            drag
+            dragConstraints={{ top: 0, left: 0, bottom: 0, right: 0 }}
+            dragElastic={2}
+            className='text-2xl hover:-translate-y-1 transition duration-100'><MdOutlineEmail /></motion.button>
         </motion.div>
       </div>
       <motion.div
-        initial={{opacity:0}}
-        animate={{opacity:1}}
-        transition={{delay:0.2,duration:0.2}}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2, duration: 0.2 }}
         className='w-[100%]'><MobileNavbar /></motion.div>
     </div>
   )
