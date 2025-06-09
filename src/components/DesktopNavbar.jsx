@@ -8,6 +8,9 @@ import { FaTools } from "react-icons/fa";
 import { FaUniversity } from "react-icons/fa";
 import { MdContactEmergency } from "react-icons/md";
 import useScrollDirection from '../hooks/useScrollDirection'
+import FadeInUpAnimation from '../hooks/FadeInUpAnimation';
+import { useTheme } from '../context/ThemeContext';
+import { Moon, Sun } from 'lucide-react';
 
 let tabs = [
   { id: 'home', label: 'Home', link: '/', icon: <IoMdHome /> },
@@ -22,7 +25,9 @@ const DesktopNavbar = () => {
 
   const location = useLocation();
   const [activeTab, setActiveTab] = useState('home');
-  const scrollUp = useScrollDirection(); 
+  const scrollUp = useScrollDirection();
+
+  const { isDark, setIsDark } = useTheme();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -52,19 +57,19 @@ const DesktopNavbar = () => {
 
   return (
     <motion.nav
-      initial={{ y: 0 }}
+      initial={{ y: -100 }}
       animate={{ y: scrollUp ? 0 : -100 }}
-      transition={{ type: 'tween' }}
-      className='fixed top-0 w-full justify-center px-8 pt-1 mt-0 flex flex-row items-center text-center md:justify-between  rounded-full bg-gray-900 rounded-tl-none rounded-tr-none'>
-      <span className='text-2xl '>nikhil<span className='text-blue-500'>chouksey</span></span>
+      transition={{ type: 'tween', duration: 1 }}
+      className='bg-bg-primary fixed top-0 w-full justify-center py-2 px-8 pt-1 mt-0 flex flex-row items-center text-center md:justify-between'>
+      <span className='text-2xl '>nikhil<span className=' text-text-primary '>chouksey</span></span>
       <div className="hidden sm:flex  justify-center items-center p-2 space-x-3">
         {tabs.map((tab) => (
           <Link
             key={tab.id}
             onClick={() => handleTabClick(tab.id)}
             className={`relative px-2 rounded-full py-1 text-xs font-medium transition-all duration-300 ${activeTab === tab.id
-                ? 'text-black opacity-100 bg-white'
-                : 'text-white opacity-40 hover:opacity-100'
+              ? 'text-bg-primary opacity-100 bg-text-primary'
+              : 'text-text-primary  opacity-40 hover:opacity-100'
               }`}
           >
             {activeTab === tab.id && (
@@ -79,7 +84,18 @@ const DesktopNavbar = () => {
             </motion.span>
           </Link>
         ))}
+        <motion.button
+          key={isDark ? 'moon' : 'sun'}
+          initial={{ rotate: -90, opacity: 0, scale: 0.8 }}
+          animate={{ rotate: 0, opacity: 1, scale: 1 }}
+          exit={{ rotate: 90, opacity: 0, scale: 0.8 }}
+          transition={{ duration: 0.5 }}
+          onClick={() => setIsDark(!isDark)}
+        >
+          {isDark ? <Sun size={20} /> : <Moon size={20} />}
+        </motion.button>
       </div>
+
     </motion.nav>
   )
 }

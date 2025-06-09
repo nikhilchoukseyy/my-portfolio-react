@@ -6,6 +6,11 @@ export default {
   ],
   theme: {
     extend: {
+      colors :{
+        'bg-primary' : 'var(--bg-primary)',
+        'text-primary' : 'var(--text-primary)', 
+        'bg-secondary': 'var(--bg-secondary)'
+      } , 
       fontFamily:{
         inter:["Inconsolata", 'monospace']
       }

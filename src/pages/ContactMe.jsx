@@ -5,7 +5,7 @@ import MobileNavbar from '../components/MobileNavbar'
 
 const ContactMe = () => {
   return (
-    <div className='bg-gray-950 h-[100vh] flex flex-col items-center text-white font-mono'>
+    <div className='bg-bg-primary h-[100vh] flex flex-col items-center text-text-primary font-sans'>
       <p>Contact page</p>
     </div>
     

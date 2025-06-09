@@ -2,5 +2,12 @@
 
 @tailwind base ; 
 @tailwind components; 
-@tailwind utilities ; 
+@tailwind utilities ;
+
+:root{
+  --bg-primary : #000000 ;
+  --text-primary : #ffffff ; 
+  --bg-secondary : #111111 ; 
+
+}
 
