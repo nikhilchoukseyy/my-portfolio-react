@@ -11,7 +11,8 @@ export default {
         'text-primary' : 'var(--text-primary)', 
         'bg-secondary': 'var(--bg-secondary)', 
         'bg-buttons' : 'var(--bg-buttons)' , 
-        'text-secondary' :'var(--text-secondary)'
+        'text-secondary' :'var(--text-secondary)',
+        'bg-tertiary' : 'var(--bg-tertiary)'
       } , 
       fontFamily:{
         inter:["Inconsolata", 'monospace']

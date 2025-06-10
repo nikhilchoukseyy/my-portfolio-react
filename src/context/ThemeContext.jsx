@@ -13,11 +13,14 @@ export const ThemeProvider = ({children}) =>{
     const textPrimary = isDark ? "#000000" : "#ffffff" ; 
     const bgSecondary = isDark ?  "#FFFAFA" : "#222222" ;
     const bgButtons = isDark ? "#000000" : "#222222" ;
+    const bgTertiary = isDark ? "#000000" : "#333333" ;
 
     document.documentElement.style.setProperty('--bg-primary',bgPrimary)
     document.documentElement.style.setProperty('--text-primary',textPrimary)
     document.documentElement.style.setProperty('--bg-secondary', bgSecondary)
     document.documentElement.style.setProperty('--bg-buttons', bgButtons)
+    document.documentElement.style.setProperty('--bg-tertiary', bgTertiary)
+    
   },[isDark])
 
   return (

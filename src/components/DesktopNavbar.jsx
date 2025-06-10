@@ -11,6 +11,8 @@ import useScrollDirection from '../hooks/useScrollDirection'
 import FadeInUpAnimation from '../hooks/FadeInUpAnimation';
 import { useTheme } from '../context/ThemeContext';
 import { Moon, Sun } from 'lucide-react';
+import useClickSound from '../hooks/useClickSound';
+import clickSound from '../assets/clickSound.mp3'
 
 let tabs = [
   { id: 'home', label: 'Home', link: '/', icon: <IoMdHome /> },
@@ -28,6 +30,8 @@ const DesktopNavbar = () => {
   const scrollUp = useScrollDirection();
 
   const { isDark, setIsDark } = useTheme();
+
+  const playClick = useClickSound(clickSound);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -68,7 +72,10 @@ const DesktopNavbar = () => {
               animate={{ rotate: 0, opacity: 1, scale: 1 }}
               exit={{ rotate: 90, opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.5 }}
-              onClick={() => setIsDark(!isDark)}
+              onClick={() => {
+                setIsDark(!isDark); 
+                playClick(); 
+              }}
               className='visible md:invisible '
             >
               {isDark ? <Sun size={28} /> : <Moon size={28} />}
@@ -77,8 +84,8 @@ const DesktopNavbar = () => {
         {tabs.map((tab) => (
           <Link
             key={tab.id}
-            onClick={() => handleTabClick(tab.id)}
-            className={`relative px-2 rounded-full py-1 text-lg font-medium transition-all duration-300 ${activeTab === tab.id
+            onClick={() => {handleTabClick(tab.id); playClick()}}
+            className={`relative px-2 rounded-lg py-1 text-lg font-medium transition-all duration-300 ${activeTab === tab.id
               ? 'text-white opacity-100 bg-bg-secondary scale-110'
               : 'text-text-primary  opacity-40 hover:opacity-100'
               }`}
@@ -101,7 +108,11 @@ const DesktopNavbar = () => {
           animate={{ rotate: 0, opacity: 1, scale: 1 }}
           exit={{ rotate: 90, opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.5 }}
-          onClick={() => setIsDark(!isDark)}
+          onClick={() => {
+            setIsDark(!isDark);
+            playClick();
+          } }
+          
           className='hover:bg-bg-secondary p-1 rounded-full'
         >
           {isDark ? <Sun size={28} /> : <Moon size={28} />}

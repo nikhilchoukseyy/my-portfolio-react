@@ -8,6 +8,8 @@ import { MdContactEmergency } from 'react-icons/md'
 import useScrollDirection from '../hooks/useScrollDirection'
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import useClickSound from '../hooks/useClickSound'; 
+import clickSound from '../assets/clickSound.mp3'
 
 
 const tabs = [
@@ -23,7 +25,7 @@ const MobileNavbar = () => {
   const [activeTab, setActiveTab] = useState('home')
   const scrollUp = useScrollDirection();
   const { isDark, setIsDark } = useTheme();
-
+  const playClick = useClickSound(clickSound)
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -57,7 +59,7 @@ const MobileNavbar = () => {
       {tabs.map((tab) => (
         <button
           key={tab.id}
-          onClick={() => handleTabClick(tab.id)}
+          onClick={() =>{ handleTabClick(tab.id);playClick()}}
           className={`relative px-1 py-1 text-xs font-medium transition-all duration-300 ${activeTab === tab.id
               ? ' text-white bg-black rounded-full opacity-100 scale-125'
               : ' text-text-primary  bg-transparent rounded-full opacity-50 hover:opacity-100'

@@ -9,18 +9,21 @@ import { MdOutlineEmail } from "react-icons/md";
 import MobileNavbar from '../components/MobileNavbar';
 import DesktopNavbar from '../components/DesktopNavbar';
 import FadeInUpAnimation from '../hooks/FadeInUpAnimation';
-
+import useClickSound from '../hooks/useClickSound';
+import clickSound from '../assets/clickSound.mp3'
 
 const HomePage = () => {
+
+  const playClick = useClickSound(clickSound);
 
   return (
     <div className='bg-bg-primary min-h-screen w-full overflow-x-hidden flex flex-col items-center text-text-primary font-sans gap-4'>
       <DesktopNavbar />
       <div className='flex flex-col items-center justify-center text-center gap-8 mt-24 md:mt-32 md:gap-4'>
         <motion.div
-          initial={{scale:0}}
-          animate={{scale:1}}
-          transition={{type:"spring",duration:2}}
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", duration: 2 }}
           className="w-32 md:h-64 md:w-64 rounded-full p-0.5 bg-text-primary shadow-lg"
         >
           <img
@@ -47,22 +50,23 @@ const HomePage = () => {
         </div>
 
         <motion.button
-          className="bg-bg-buttons rounded-lg px-4 py-2 text-text-secondary font-extrabold  transition hover:bg-bg-primary hover:shadow-xs  hover:bg-opacity-100 cursor-pointer  md:mt-4 md:mb-4 hover:scale-105 md:hover:scale-100 border-text-primary hover:shadow-text-primary hover:text-text-primary border-0">
+          onClick={() => { playClick(); }}
+          className="bg-bg-buttons rounded-lg px-4 py-2 text-text-secondary font-extrabold  transition hover:bg-bg-tertiary hover:shadow-xs  hover:bg-opacity-100 cursor-pointer  md:mt-4 md:mb-4 hover:scale-105 md:hover:scale-100 border-text-primary hover:shadow-text-primary hover:text-text-secondary border-0">
           <a className="flex flex-row gap-2 ">
             <span>Download Resume</span>
             <Download className='hover:translate-y-1 transition duration-200' />
           </a>
         </motion.button>
         <motion.div
-          variants={FadeInUpAnimation}
-          initial="hidden"
-          animate="show"
           className=' flex flex-row gap-4  '>
           <motion.button
+            onClick={() => { playClick(); }}
             className='text-2xl hover:-translate-y-1 transition duration-200'><FaGithub /></motion.button>
           <motion.button
+            onClick={() => { playClick(); }}
             className='text-2xl hover:-translate-y-1 transition duration-200'><CiLinkedin /></motion.button>
           <motion.button
+            onClick={() => { playClick(); }}
             className='text-2xl hover:-translate-y-1 transition duration-200'><MdOutlineEmail /></motion.button>
         </motion.div>
       </div>
