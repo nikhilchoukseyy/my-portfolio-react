@@ -5,9 +5,10 @@
 @tailwind utilities ;
 
 :root{
-  --bg-primary : #000000 ;
+  --bg-primary : #111111 ;
   --text-primary : #ffffff ; 
-  --bg-secondary : #111111 ; 
-
+  --bg-secondary :  #222222; 
+  --bg-buttons : #222222 ; 
+  --text-secondary : #ffffff ; 
 }
 

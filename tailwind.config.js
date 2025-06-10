@@ -9,7 +9,9 @@ export default {
       colors :{
         'bg-primary' : 'var(--bg-primary)',
         'text-primary' : 'var(--text-primary)', 
-        'bg-secondary': 'var(--bg-secondary)'
+        'bg-secondary': 'var(--bg-secondary)', 
+        'bg-buttons' : 'var(--bg-buttons)' , 
+        'text-secondary' :'var(--text-secondary)'
       } , 
       fontFamily:{
         inter:["Inconsolata", 'monospace']

@@ -53,13 +53,13 @@ const MobileNavbar = () => {
       initial={{ y: 100 }}
       animate={{ y: scrollUp ? 0 : 100 }}
       transition={{ type: 'tween', duration: 0.3 }}
-      className="w-full h-auto md:hidden flex justify-center items-center text-center px-4 py-2 bg-bg-secondary gap-6 fixed bottom-0 z-50">
+      className="w-full h-auto md:hidden flex justify-center items-center text-center px-4 py-2 bg-bg-primary gap-6 fixed bottom-0 z-50">
       {tabs.map((tab) => (
         <button
           key={tab.id}
           onClick={() => handleTabClick(tab.id)}
           className={`relative px-1 py-1 text-xs font-medium transition-all duration-300 ${activeTab === tab.id
-              ? ' text-white bg-black rounded-full opacity-100'
+              ? ' text-white bg-black rounded-full opacity-100 scale-125'
               : ' text-text-primary  bg-transparent rounded-full opacity-50 hover:opacity-100'
             }`}
         >
@@ -75,16 +75,6 @@ const MobileNavbar = () => {
           </motion.span>
         </button>
       ))}
-      <motion.button
-        key={isDark ? 'moon' : 'sun'}
-        initial={{ rotate: -90, opacity: 0, scale: 0.8 }}
-        animate={{ rotate: 0, opacity: 1, scale: 1 }}
-        exit={{ rotate: 90, opacity: 0, scale: 0.8 }}
-        transition={{ duration: 0.5 }}
-        onClick={() => setIsDark(!isDark)}
-      >
-        {isDark ? <Sun size={20} /> : <Moon size={20} />}
-      </motion.button>
     </motion.div>
   )
 }
