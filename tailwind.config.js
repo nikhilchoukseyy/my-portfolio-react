@@ -12,10 +12,14 @@ export default {
         'bg-secondary': 'var(--bg-secondary)', 
         'bg-buttons' : 'var(--bg-buttons)' , 
         'text-secondary' :'var(--text-secondary)',
-        'bg-tertiary' : 'var(--bg-tertiary)'
+        'bg-tertiary' : 'var(--bg-tertiary)',
+        'text-tertiary': 'var(--text-tertiary)'
       } , 
       fontFamily:{
-        inter:["Inconsolata", 'monospace']
+        cursive:["Cedarville Cursive", 'cursive'], 
+        handwritten:["Shadows Into Light", 'cursive'], 
+        cavet : ["Caveat", 'cursive'],
+        amatic:["Amatic SC", 'sans-serif']
       }
     },
   },
