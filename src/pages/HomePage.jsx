@@ -24,7 +24,7 @@ const HomePage = () => {
           initial={{ scale: 0.8 }}
           animate={{ scale: 1 }}
           transition={{ type: "spring", duration: 2 }}
-          className="w-32 md:h-64 md:w-64 rounded-full p-0.5 bg-text-primary shadow-lg"
+          className="w-32 md:h-56 md:w-56 rounded-full p-0.5 bg-text-primary shadow-lg"
         >
           <img
             src={avatarPhoto}
@@ -32,32 +32,33 @@ const HomePage = () => {
             className="w-full object-cover rounded-full border-4 border-bg-primary"
           />
         </motion.div>
-        <div className='h-auto w-auto flex flex-col md:flex-row md:items-baseline items-center justify-evenly gap-2 mt-2 mb-14 md:mb-0 '>
-          <h1 className='text-3xl md:text-4xl font-semibold font-cavet'>Hello I am</h1>
+        <div className='h-auto w-[80%] flex flex-col md:flex-col md:items-center items-center justify-center gap-2 mt-2 mb-0 md:mb-6 text-center px-0'>
+          <h1 className='text-3xl md:text-4xl font-extrabold'>Hello I am Nikhil chouksey</h1>
           <span
-            className='h-auto md:h-[48px] text-center md:text-left text-2xl font-thin md:text-2xl overflow-hidden md:min-w-[230px] font-cavet  text-text-tertiary'
-          >
-            <Typewriter
-              words={[' nikhil chouksey', ' a web developer', ' a problem solver']}
-              loop={true}
-              cursor
-              cursorStyle="_"
-              typeSpeed={100}
-              deleteSpeed={100}
-              delaySpeed={3000}
-            />
+            className='h-auto md:h-[48px] md:text-center text-md font-normal md:text-xl  md:w-[50%]  text-text-tertiary px-2 text-center'
+          >Information Technology student skilled in web development, DSA, and building real-world software projects
+            {/* <Typewriter
+      words={['Information Technology student skilled in web development, DSA, and building real-world software projects']}
+      // loop={false}
+      // cursor
+      // cursorStyle="_"
+      // typeSpeed={100}
+      // deleteSpeed={100}
+      // delaySpeed={3000}
+    /> */}
           </span>
         </div>
 
+
         <motion.button
           onClick={() => { playClick(); }}
-          className="bg-bg-buttons rounded-lg px-4 py-2 text-text-secondary  transition hover:bg-bg-tertiary hover:shadow-xs  hover:bg-opacity-100 cursor-pointer  md:mt-4 md:mb-4 hover:scale-105 md:hover:scale-100 border-text-primary hover:shadow-text-primary hover:text-text-secondary border-0 font-handwritten">
+          className="bg-bg-buttons rounded-lg px-4 py-2 text-text-secondary  transition active:shadow-xs  active:bg-opacity-100 cursor-pointer  md:mt-4 md:mb-4 active:scale-95 md:active:scale-95 md:hover:bg-bg-tertiary border-text-primary hover:shadow-text-primary hover:text-text-secondary border-0 font-sans md:text-xl mt-0">
           <a className="flex flex-row gap-2 ">
             <span>Download Resume</span>
             <Download className='hover:translate-y-1 transition duration-200' />
           </a>
         </motion.button>
-        <motion.div
+        {/* <motion.div
           className=' flex flex-row gap-4  '>
           <motion.button
             onClick={() => { playClick(); }}
@@ -68,7 +69,7 @@ const HomePage = () => {
           <motion.button
             onClick={() => { playClick(); }}
             className='text-2xl hover:-translate-y-1 transition duration-200'><MdOutlineEmail /></motion.button>
-        </motion.div>
+        </motion.div> */}
       </div>
       <motion.div
         className='w-[100%]'><MobileNavbar /></motion.div>

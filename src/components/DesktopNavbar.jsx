@@ -64,7 +64,7 @@ const DesktopNavbar = () => {
       initial={{ y: -100 }}
       animate={{ y: scrollUp ? 0 : -100 }}
       transition={{ type: 'tween', duration: 0.5 }}
-      className='bg-bg-primary fixed top-0 w-full md:pt-4 px-6 md:px-12 mt-0 flex flex-row justify-between h-[10dvh] items-center'>
+      className='bg-bg-primary fixed top-0 w-full md:pt-4 px-4 md:px-12 mt-0 flex flex-row justify-between h-[10dvh] items-center font-sans'>
       <span className='text-2xl md:text-4xl pb-2 font-extrabold font-cursive'>nikhil<span className=' text-text-primary '>chouksey</span></span>
       <motion.button
               key={isDark ? 'moon' : 'sun'}
