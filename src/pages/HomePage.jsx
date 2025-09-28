@@ -36,7 +36,7 @@ const HomePage = () => {
           <h1 className='text-3xl md:text-4xl font-extrabold'>Hello I am Nikhil chouksey</h1>
           <span
             className='h-auto md:h-[48px] md:text-center text-md font-normal md:text-xl  md:w-[50%]  text-text-tertiary px-2 text-center'
-          >Information Technology student skilled in web development, DSA, and building real-world software projects
+          >a student skilled in web development, DSA, and building real-world software projects
             {/* <Typewriter
       words={['Information Technology student skilled in web development, DSA, and building real-world software projects']}
       // loop={false}
