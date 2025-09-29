@@ -4,7 +4,7 @@ import { div } from 'framer-motion/client';
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import gyaniWebsite from '../assets/images/gyani_website.png'
-import fitnessPoint from '../assets/images/fitnessPoint.png'
+import fitnessPoint from '../assets/images/fitnesspoint.png'
 import quickQr from '../assets/images/quickqr.png'
 import shortcutUrl from '../assets/images/shortcuturl.png'
 import pdftoolsBot from '../assets/images/pdftoolsbot.png'
