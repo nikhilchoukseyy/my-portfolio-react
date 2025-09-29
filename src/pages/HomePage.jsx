@@ -53,12 +53,12 @@ const HomePage = () => {
         <motion.button
           onClick={() => { playClick(); }}
           className="bg-bg-buttons rounded-lg px-4 py-2 text-text-secondary  transition active:shadow-xs  active:bg-opacity-100 cursor-pointer  md:mt-4 md:mb-4 active:scale-95 md:active:scale-95 md:hover:bg-bg-tertiary border-text-primary hover:shadow-text-primary hover:text-text-secondary border-0 font-sans md:text-xl mt-0">
-          <a className="flex flex-row gap-2 ">
+          <a className="flex flex-row gap-2 font-mono">
             <span>Download Resume</span>
             <Download className='hover:translate-y-1 transition duration-200' />
           </a>
         </motion.button>
-        {/* <motion.div
+        <motion.div
           className=' flex flex-row gap-4  '>
           <motion.button
             onClick={() => { playClick(); }}
@@ -69,7 +69,7 @@ const HomePage = () => {
           <motion.button
             onClick={() => { playClick(); }}
             className='text-2xl hover:-translate-y-1 transition duration-200'><MdOutlineEmail /></motion.button>
-        </motion.div> */}
+        </motion.div>
       </div>
       <motion.div
         className='w-[100%]'><MobileNavbar /></motion.div>

@@ -13,7 +13,8 @@ export default {
         'bg-buttons' : 'var(--bg-buttons)' , 
         'text-secondary' :'var(--text-secondary)',
         'bg-tertiary' : 'var(--bg-tertiary)',
-        'text-tertiary': 'var(--text-tertiary)'
+        'text-tertiary': 'var(--text-tertiary)', 
+        'bg-buttons2': 'var(--bg-buttons2)'
       } , 
       fontFamily:{
         cursive:["Cedarville Cursive", 'cursive'], 

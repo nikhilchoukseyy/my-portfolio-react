@@ -15,6 +15,7 @@ export const ThemeProvider = ({children}) =>{
     const bgButtons = isDark ? "#000000" : "#222222" ;
     const bgTertiary = isDark ? "#000000" : "#333333" ;
     const textTertiary = isDark ? "#FF0000" :"#FFFF00" ; 
+    const bgButtons2 = isDark ? "#ffffff" : "#333333";
 
     document.documentElement.style.setProperty('--bg-primary',bgPrimary)
     document.documentElement.style.setProperty('--text-primary',textPrimary)
@@ -22,6 +23,7 @@ export const ThemeProvider = ({children}) =>{
     document.documentElement.style.setProperty('--bg-buttons', bgButtons)
     document.documentElement.style.setProperty('--bg-tertiary', bgTertiary)
     document.documentElement.style.setProperty('--text-tertiary',textTertiary)
+    document.documentElement.style.setProperty('--bg-buttons2', bgButtons2);
     
   },[isDark])
 
