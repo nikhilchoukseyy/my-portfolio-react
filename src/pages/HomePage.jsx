@@ -17,7 +17,7 @@ const HomePage = () => {
   const playClick = useClickSound(clickSound);
 
   return (
-    <div className='bg-bg-primary min-h-screen w-full overflow-x-hidden flex flex-col items-center text-text-primary font-sans gap-4'>
+    <div className='bg-bg-primary min-h-screen w-full overflow-x-hidden flex flex-col items-center text-text-primary font-sans gap-4 border-bg-tertiary border-dotted border-2'>
       <DesktopNavbar />
       <div className='flex flex-col items-center justify-center text-center gap-8 mt-24 md:mt-32 md:gap-4'>
         <motion.div
@@ -33,10 +33,16 @@ const HomePage = () => {
           />
         </motion.div>
         <div className='h-auto w-[80%] flex flex-col md:flex-col md:items-center items-center justify-center gap-2 mt-2 mb-0 md:mb-6 text-center px-0'>
-          <h1 className='text-3xl md:text-4xl font-extrabold'>Hello I am Nikhil chouksey</h1>
+          <h1 className='text-3xl md:text-4xl font-extrabold opacity-90'>Hello
+            <motion.span
+              style={{ display: "inline-block", transformOrigin:"70% 70%", }}
+              animate={{rotate: [0, 20, -10, 20, -6, 15, 0]}}
+              transition={{duration:2, repeat:Infinity , repeatDelay:2,ease:"easeInOut"}}
+            >👋</motion.span>
+            I am Nikhil chouksey</h1>
           <span
-            className='h-auto md:h-[48px] md:text-center text-md font-normal md:text-xl  md:w-[50%]  text-text-tertiary px-2 text-center'
-          >a student skilled in web development, DSA, and building real-world software projects
+            className='h-auto md:h-[48px] md:text-center text-md font-normal md:text-xl  md:w-[50%]  text-text-tertiary px-2 text-center opacity-60'
+          >i am skilled in web development, DSA, and building real-world software projects
             {/* <Typewriter
       words={['Information Technology student skilled in web development, DSA, and building real-world software projects']}
       // loop={false}
@@ -52,7 +58,7 @@ const HomePage = () => {
 
         <motion.button
           onClick={() => { playClick(); }}
-          className="bg-bg-buttons rounded-lg px-4 py-2 text-text-secondary  transition active:shadow-xs  active:bg-opacity-100 cursor-pointer  md:mt-4 md:mb-4 active:scale-95 md:active:scale-95 md:hover:bg-bg-tertiary border-text-primary hover:shadow-text-primary hover:text-text-secondary border-0 font-sans md:text-xl mt-0">
+          className="bg-bg-buttons rounded-lg px-4 py-2 text-text-secondary  transition active:shadow-xs  active:bg-opacity-100 cursor-pointer  md:mt-8 md:mb-2 active:scale-95 md:active:scale-95 md:hover:bg-bg-tertiary border-text-primary hover:shadow-text-primary hover:text-text-secondary border-0 font-sans md:text-xl mt-0">
           <a className="flex flex-row gap-2 font-mono">
             <span>Download Resume</span>
             <Download className='hover:translate-y-1 transition duration-200' />

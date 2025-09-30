@@ -25,7 +25,8 @@ const ProjectCard = () => {
 
     { title: "ShortcutUrl", desc: "A simple and fast URL shortener built toshorten, share, and manage links effortlessly.", live: "https://shortcuturl.vercel.app/", github: "https://github.com/imnikhilchouksey/shortcutURL", accent: ["#ef4444", "#f97316"], image: `${shortcutUrl}` },
 
-    { title: "PDFTools : Telegram bot", desc: "A Telegram bot to manage PDFs and images efficiently. Users can upload images or PDFs and perform operations like creating PDFs from images, merging PDFs, splitting PDFs, extracting text, and converting PDFs to Word.", live: "https://t.me/pdfToolkit_bot", github: "https://github.com/imnikhilchouksey/PDFTools-Bot", accent: ["#7c3aed", "#34d399"], image: `${pdftoolsBot}` },]
+    { title: "PDFTools : Telegram bot", desc: "A Telegram bot to manage PDFs and images efficiently. Users can upload images or PDFs and perform operations like creating PDFs from images, merging PDFs, splitting PDFs, extracting text, and converting PDFs to Word.", live: "https://t.me/pdfToolkit_bot", github: "https://github.com/imnikhilchouksey/PDFTools-Bot", accent: ["#7c3aed", "#34d399"], image: `${pdftoolsBot}` },
+  ]
 
   useEffect(() => {
     gsap.utils.toArray('.projectcard').forEach(card => {
@@ -44,14 +45,14 @@ const ProjectCard = () => {
   })
 
   return (
-    <main className="bg-bg-primary border-bg-tertiary border-dotted border-2 text-text-primary flex min-w-full min-h-screen mx-auto p-6 flex-col items-center justify-center">
+    <main className="bg-bg-primary border-bg-tertiary border-dotted border-2 text-text-primary flex min-w-full min-h-screen mx-auto p-6 flex-col items-center justify-center border-t-0">
       <h1 className="text-2xl font-thin mb-6 text-center ">Projects</h1>
 
       <div className="flex flex-col gap-8 min-w-full md:min-w-[80%] min-h-screen items-center justify-center mb-4 pb-[50dvh]">
         {projects.map((p, i) => (
           <div
             key={p.title}
-            className={`projectcard flex flex-col rounded-2xl bg-bg-buttons text-text-secondary p-4 border border-white/10 w-full size-96 text-wrap 
+            className={`projectcard flex flex-col rounded-2xl bg-bg-buttons text-text-secondary p-4 border border-bg-buttons w-full size-96 text-wrap 
       ${i === projects.length - 1 ? "relative" : "sticky top-[15dvh]"}`}
           >
             <div className="flex flex-col md:flex-row items-center justify-center md:justify-between text-center gap-2  md:px-12 md:py-12 ">
