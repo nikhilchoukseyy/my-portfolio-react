@@ -56,12 +56,12 @@ const ProjectCard = () => {
       ${i === projects.length - 1 ? "relative" : "sticky top-[15dvh]"}`}
           >
             <div className="flex flex-col md:flex-row items-center justify-center md:justify-between text-center gap-2  md:px-12 md:py-12 ">
-              <div className="w-full md:w-[90dvh] h-[20dvh] md:h-[40dvh] rounded-lg flex items-center justify-center"
-                style={{ background: `linear-gradient(135deg, ${p.accent[0]}, ${p.accent[1]})` }}>
+              <div className="w-full md:w-[90dvh] h-[20dvh] md:h-[40dvh] flex items-center justify-center"
+                >
                 <img
                   src={p.image}
                   alt={p.title}
-                  className="w-full h-full object-contain rounded-xl"
+                  className="w-full h-full object-contain rounded-2xl"
                 />
               </div>
               <div className='flex flex-col text-wrap md:w-[40dvh] text-center'>

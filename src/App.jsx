@@ -9,6 +9,7 @@ import SkillsPage from './pages/SkillsPage'
 import { div } from 'framer-motion/client'
 
 
+
 function App() {
   return (
       <div>
@@ -17,6 +18,7 @@ function App() {
       <section id='skills' className='min-h-screen'><SkillsPage /></section>
       <section id='education' className='min-h-screen'><EducationPage /></section>
       <section id='contact' className='min-h-screen'><ContactMe /></section>
+     
     </div>
     
     // <Routes>

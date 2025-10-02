@@ -48,7 +48,7 @@ const SkillsPage = () => {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.2 }}
-      className='bg-bg-primary min-h-screen flex flex-col items-center justify-center text-text-primary border-bg-tertiary border-dotted border-2 border-t-0 py-2'>
+      className='bg-bg-primary min-h-screen flex flex-col items-center justify-center text-text-primary border-bg-tertiary border-dotted border-2 border-t-0 py-2 overflow-hidden'>
       <h1 className='font-thin text-2xl py-6 '>Skils</h1>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2  gap-4 md:gap-12 [&>*]:px-2 [&>*]:py-2 [&>*]:border-2 [&>*]:md:size-72 [&>*]:size-48 [&>*]:w-64 [&>*]:bg-bg-buttons [&>*]:border-bg-buttons [&>*]:shadow-lg [&>*]:rounded-2xl '>
         <motion.div
