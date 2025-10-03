@@ -12,7 +12,7 @@ export const ThemeProvider = ({children}) =>{
     const bgPrimary = isDark ? "#FAF9F6" : "#000000" ; 
     const textPrimary = isDark ? "#000000" : "#ffffff" ; 
     const bgSecondary = isDark ?  "#FFFAFA" : "#111111" ;
-    const bgButtons = isDark ? "#000000" : "#111111" ;
+    const bgButtons = isDark ? "#ffffff" : "#111111" ;
     const bgTertiary = isDark ? "#000000" : "#222222" ;
     const textTertiary = isDark ? "#FF0000" :"#FFFF00" ; 
     const bgButtons2 = isDark ? "#ffffff" : "#222222";

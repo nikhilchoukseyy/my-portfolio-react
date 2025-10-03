@@ -8,7 +8,7 @@ const Preloader = () => {
 
   useEffect(() => {
     const finishLoading = () => {
-      setTimeout(() => setIsLoading(false), 100)
+      setTimeout(() => setIsLoading(false), 2000)
     }
 
     if (document.readyState === 'complete') {

@@ -91,8 +91,8 @@ const EducationPage = () => {
   }, []);
 
   return (
-    <div className="timeline-container relative w-full min-h-[220vh] bg-bg-primary overflow-hidden">
-      
+    <div className="timeline-container relative w-full min-h-[220vh] bg-bg-primary overflow-hidden border-bg-tertiary border-dotted border-2 border-t-0">
+      <h1 className="text-text-primary text-center font-thin text-2xl pt-4">Education</h1>
       <svg
         width="100%"
         height="1500"
@@ -117,14 +117,14 @@ const EducationPage = () => {
       {Education.map((card, i) => {
    
         const positionClass = i % 2 === 0
-          ? "left-[45%] sm:left-[10%] md:left-[40%] lg:left-[45%]"
-          : "left-[55%] sm:left-[10%] md:left-[70%] lg:left-[55%]";
+          ? "left-[45%] sm:left-[10%] md:left-[45%] lg:left-[45%]"
+          : "left-[55%] sm:left-[10%] md:left-[55%] lg:left-[55%]";
 
         return (
           <div
             key={i}
             ref={(el) => (cardsRef.current[i] = el)}
-            className={`absolute ${positionClass} w-[260px] bg-bg-secondary text-text-primary p-4 rounded-xl shadow-xl opacity-0`}
+            className={`absolute ${positionClass} w-[260px] lg:w-[360px] bg-bg-secondary text-text-primary p-4 rounded-xl shadow-xl opacity-0`}
             style={{ transform: "translateX(-50%)" }} 
           >
             <h3 className="text-xl font-bold">{card.title}</h3>
@@ -134,6 +134,7 @@ const EducationPage = () => {
           </div>
         );
       })}
+      
     </div>
   );
 };

@@ -80,12 +80,12 @@ const DesktopNavbar = () => {
             >
               {isDark ? <Sun size={28} /> : <Moon size={28} />}
             </motion.button>
-      <div className="hidden sm:flex  justify-center items-center p-2 space-x-3">
+      <div className="hidden sm:flex  justify-center items-center p-2 space-x-3 ">
         {tabs.map((tab) => (
           <Link
             key={tab.id}
             onClick={() => {handleTabClick(tab.id); playClick()}}
-            className={`relative px-2 rounded-lg py-1 text-lg font-medium transition-all duration-300 ${activeTab === tab.id
+            className={`relative shadow-xl px-2 rounded-lg py-1 text-lg font-medium transition-all duration-300 ${activeTab === tab.id
               ? 'text-text-primary opacity-100 bg-bg-secondary scale-110'
               : 'text-text-primary opacity-40 hover:opacity-100'
               }`}

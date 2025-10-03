@@ -61,14 +61,14 @@ const MobileNavbar = () => {
           key={tab.id}
           onClick={() =>{ handleTabClick(tab.id);playClick()}}
           className={`relative px-1 py-1 text-xs font-medium transition-all duration-300 ${activeTab === tab.id
-              ? ' text-white bg-black rounded-full opacity-100 scale-125'
+              ? ' text-text-primary bg-transparent rounded-full opacity-100 scale-125'
               : ' text-text-primary  bg-transparent rounded-full opacity-50 hover:opacity-100'
             }`}
         >
           {activeTab === tab.id && (
             <motion.span
               layoutId="tween"
-              className="absolute inset-0 z-2 bg-[#111] rounded-full"
+              className="absolute inset-0 z-2 bg-transparent rounded-full"
               transition={{ type: 'spring', bounce: 0.5, duration: 0.2 }}
             />
           )}

@@ -48,11 +48,11 @@ const ProjectCard = () => {
     <main className="bg-bg-primary border-bg-tertiary border-dotted border-2 text-text-primary flex min-w-full min-h-screen mx-auto p-6 flex-col items-center justify-center border-t-0">
       <h1 className="text-2xl font-thin mb-6 text-center ">Projects</h1>
 
-      <div className="flex flex-col gap-8 min-w-full md:min-w-[80%] min-h-screen items-center justify-center mb-4 pb-[50dvh]">
+      <div className="flex flex-col gap-8 min-w-full md:min-w-[80%] min-h-screen items-center justify-center mb-4 pb-[50dvh]  ">
         {projects.map((p, i) => (
           <div
             key={p.title}
-            className={`projectcard flex flex-col rounded-2xl bg-bg-buttons text-text-secondary p-4 border border-bg-buttons w-full size-96 text-wrap 
+            className={`projectcard flex flex-col shadow-2xl rounded-2xl bg-bg-buttons text-text-primary p-4 w-full size-96 text-wrap 
       ${i === projects.length - 1 ? "relative" : "sticky top-[15dvh]"}`}
           >
             <div className="flex flex-col md:flex-row items-center justify-center md:justify-between text-center gap-2  md:px-12 md:py-12 ">
@@ -66,14 +66,14 @@ const ProjectCard = () => {
               </div>
               <div className='flex flex-col text-wrap md:w-[40dvh] text-center'>
                 <h2 className="text-lg font-semibold">{p.title}</h2>
-                <p className="text-sm mx-2 my-2 text-gray-300">{p.desc}</p>
+                <p className="text-sm mx-2 my-2 text-text-tertiary opacity-70">{p.desc}</p>
                 <div className="flex justify-center gap-2">
                   <a href={p.live} target="_blank"
-                    className="font-mono active:scale-95 transition cursor-pointer text-sm rounded-lg bg-bg-buttons2 text-text-primary px-8 py-1">
+                    className="font-mono active:scale-95 transition cursor-pointer text-sm rounded-lg bg-bg-buttons2 text-text-primary px-8 py-1 shadow-xl">
                     Live
                   </a>
                   <a href={p.github} target="_blank"
-                    className="font-mono active:scale-95 transition cursor-pointer text-sm rounded-lg bg-bg-buttons2 text-text-primary px-8 py-1">
+                    className="font-mono active:scale-95 transition cursor-pointer text-sm rounded-lg bg-bg-buttons2 text-text-primary px-8 py-1 shadow-xl">
                     GitHub
                   </a>
                 </div>

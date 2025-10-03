@@ -55,7 +55,7 @@ const SkillsPage = () => {
           variants={childrenVariants}
           className='text-center h-1/4 hover:scale-105 transition-transform ease-in-out  duration-[1s]'>
           <h1 className='opacity-70 pb-2 pt-0 text-lg text-text-secondary'>Frontend</h1>
-          <div className='grid grid-cols-3 gap-2'>
+          <div className='grid grid-cols-3 gap-2 [&>*]:shadow-xl'>
             <div className='border-1 px-2 py-1 bg-bg-buttons2 rounded-lg items-center justify-center flex flex-col   cursor-pointer active:scale-90 transition w-[1/3] text-blue-500 '>
               <FaReact className='size-8 md:size-12' />
               <span className=''>React</span>
@@ -79,7 +79,7 @@ const SkillsPage = () => {
           variants={childrenVariants}
           className='text-center h-1/4 hover:scale-105 transition-transform ease-in-out  duration-[1s]'>
           <h1 className='opacity-70 pb-2 pt-0 text-lg text-text-secondary'>Backend</h1>
-          <div className='grid grid-cols-3 gap-2'>
+          <div className='grid grid-cols-3 gap-2 [&>*]:shadow-xl'>
             <div className='border-1 px-2 py-1 bg-bg-buttons2 rounded-lg items-center justify-center flex flex-col   cursor-pointer active:scale-90 transition w-[1/3]  text-green-800'>
               <FaNode className='size-8 md:size-12' />
               <span className=''>Node.js</span>
@@ -102,7 +102,7 @@ const SkillsPage = () => {
           variants={childrenVariants}
           className='text-center h-1/4 hover:scale-105 transition-transform ease-in-out  duration-[1s]'>
           <h1 className='opacity-70 pb-2 pt-0 text-lg text-text-secondary'>Languages</h1>
-          <div className='grid grid-cols-3 gap-2'>
+          <div className='grid grid-cols-3 gap-2 [&>*]:shadow-xl'>
             <div className='border-1 px-2 py-1 bg-bg-buttons2 rounded-lg items-center justify-center flex flex-col   cursor-pointer active:scale-90 transition w-[1/3] text-yellow-200'>
               <FaPython className='size-8 md:size-12' />
               <span className=''>Python</span>
@@ -122,7 +122,7 @@ const SkillsPage = () => {
           variants={childrenVariants}
           className='text-center h-1/4 hover:scale-105 transition-transform ease-in-out  duration-[1s]'>
           <h1 className='opacity-70 pb-2 pt-0 text-lg text-text-secondary'>Tools & Technology</h1>
-          <div className='grid grid-cols-3 gap-2'>
+          <div className='grid grid-cols-3 gap-2 [&>*]:shadow-xl'>
             <div className='border-1 px-2 py-1 bg-bg-buttons2 rounded-lg items-center justify-center flex flex-col   cursor-pointer active:scale-90 transition w-[1/3]'>
               <FaGithub className='size-8 md:size-12' />
               <span className='text-xs'>Git & Github</span>
