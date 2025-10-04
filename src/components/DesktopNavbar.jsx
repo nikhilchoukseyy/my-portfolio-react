@@ -11,8 +11,8 @@ import useScrollDirection from '../hooks/useScrollDirection'
 import FadeInUpAnimation from '../hooks/FadeInUpAnimation';
 import { useTheme } from '../context/ThemeContext';
 import { Moon, Sun } from 'lucide-react';
-import useClickSound from '../hooks/useClickSound';
-import clickSound from '../assets/clickSound.mp3'
+// import useClickSound from '../hooks/useClickSound';
+// import clickSound from '../assets/clickSound.mp3'
 
 let tabs = [
   { id: 'home', label: 'Home', link: '/', icon: <IoMdHome /> },
@@ -31,7 +31,7 @@ const DesktopNavbar = () => {
 
   const { isDark, setIsDark } = useTheme();
 
-  const playClick = useClickSound(clickSound);
+  // const playClick = useClickSound(clickSound);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -83,7 +83,7 @@ const DesktopNavbar = () => {
         {tabs.map((tab) => (
           <Link
             key={tab.id}
-            onClick={() => {handleTabClick(tab.id); playClick()}}
+            onClick={() => {handleTabClick(tab.id); /*playClick()*/}}
             className={`relative shadow-xl px-2 rounded-lg py-1 text-lg font-medium transition-all duration-300 ${activeTab === tab.id
               ? 'text-text-primary opacity-100 bg-bg-secondary scale-110'
               : 'text-text-primary opacity-40 hover:opacity-100'
@@ -109,7 +109,7 @@ const DesktopNavbar = () => {
           transition={{ duration: 0.5 }}
           onClick={() => {
             setIsDark(!isDark);
-            playClick();
+            /*playClick();*/
           } }
           
           className='hover:bg-bg-secondary p-1 rounded-full'
