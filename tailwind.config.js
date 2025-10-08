@@ -20,7 +20,8 @@ export default {
         cursive:["Cedarville Cursive", 'cursive'], 
         handwritten:["Shadows Into Light", 'cursive'], 
         cavet : ["Caveat", 'cursive'],
-        amatic:["Amatic SC", 'sans-serif']
+        amatic:["Amatic SC", 'sans-serif'],
+        google_sans_code:["Google Sans Code", 'monospace']
       }
     },
   },

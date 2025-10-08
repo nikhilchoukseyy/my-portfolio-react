@@ -29,7 +29,7 @@ const HomePage = () => {
         <motion.div
           initial={{ scale: 0.8 }}
           animate={{ scale: 1 }}
-          transition={{ type: "spring", duration: 2 }}
+          transition={{ duration: 1 }}
           className="w-32 md:h-56 md:w-56 rounded-full p-0.5 bg-text-primary shadow-lg"
         >
           <img
@@ -40,7 +40,7 @@ const HomePage = () => {
         </motion.div>
         <div className="h-auto w-[80%] flex flex-col md:flex-col md:items-center items-center justify-center gap-2 mt-2 mb-0 md:mb-6 text-center px-0">
      
-      <h1 className="text-3xl md:text-4xl font-extrabold opacity-90">
+      <h1 className="text-3xl md:text-4xl font-extrabold opacity-90 font-google_sans_code">
         Hello{" "}
         <motion.span
           style={{ display: "inline-block", transformOrigin: "70% 70%" }}
@@ -59,13 +59,13 @@ const HomePage = () => {
 
       
       <motion.ul
-        className="mt-4 md:text-xl text-md text-text-tertiary font-medium list-disc text-center md:w-full px-0 ml-4"
+        className="mt-4 md:text-xl text-sm text-text-tertiary font-thin list-disc text-center md:w-full px-0 ml-4 font-google_sans_code"
         initial="hidden"
         animate="visible"
         variants={{
           hidden: { opacity: 0 },
           visible: {
-            opacity: 0.7,
+            opacity: 0.9,
             transition: { staggerChildren: 0.4 },
           },
         }}
