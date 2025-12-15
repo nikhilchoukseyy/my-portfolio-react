@@ -13,9 +13,9 @@ import useClickSound from '../hooks/useClickSound';
 import clickSound from '../assets/clickSound.mp3'
 
 const introPoints = [
-  "i am skilled in Web Development",
-  "have Strong DSA problem-solving",
-  "Building real-world software projects",
+  "MERN developer",
+  "DSA problem solver",
+  "SIH2025 Finalist",
 ];
 
 const HomePage = () => {
@@ -25,9 +25,9 @@ const HomePage = () => {
   return (
     <div className='bg-bg-primary min-h-screen w-full overflow-x-hidden flex flex-col items-center text-text-primary font-sans gap-4 border-bg-tertiary border-dotted border-2'>
       <DesktopNavbar />
-      <div className='flex flex-col items-center justify-center text-center gap-8 mt-24 md:mt-32 md:gap-4'>
+      <div className='flex flex-col items-center justify-center text-center gap-8 mt-20 md:mt-32 md:gap-4'>
         <motion.div
-          initial={{ scale: 0.8 }}
+          initial={{ scale: 0.7 }}
           animate={{ scale: 1 }}
           transition={{ duration: 1 }}
           className="w-32 md:h-56 md:w-56 rounded-full p-0.5 bg-text-primary shadow-lg"
@@ -59,7 +59,7 @@ const HomePage = () => {
 
       
       <motion.ul
-        className="mt-4 md:text-xl text-sm text-text-tertiary font-thin list-disc text-center md:w-full px-0 ml-4 font-google_sans_code"
+        className="mt-4 md:text-xl text-md text-text-tertiary font-thin list-disc text-center md:w-full px-0 ml-4 font-google_sans_code md:text-center "
         initial="hidden"
         animate="visible"
         variants={{
