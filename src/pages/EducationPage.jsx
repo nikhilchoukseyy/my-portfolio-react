@@ -27,8 +27,8 @@ const EducationPage = () => {
       id: "uni",
       title: "University",
       institute: "University Institute of Technology RGPV, Bhopal",
-      date: "2023 - Present",
-      description: "B.Tech in Information Technology",
+      date: "2023 - 2027",
+      description: "B.Tech in Information Technology [CGPA : 6.94 (upto 4th semester)]",
     },
   ];
 
@@ -43,6 +43,12 @@ const EducationPage = () => {
       return (pathLength / (Education.length + 1)) * (i + 1);
     });
 
+    // Initial animation offset
+    cardsRef.current.forEach((card) => {
+      if (!card) return;
+      gsap.set(card, { y: 40, opacity: 0 });
+    });
+
     gsap.to(path, {
       strokeDashoffset: 0,
       ease: "none",
@@ -51,14 +57,12 @@ const EducationPage = () => {
         start: "top top",
         end: "bottom bottom",
         scrub: true,
-        markers: false,
         onUpdate: (self) => {
           const currentLength = pathLength * self.progress;
 
           cardsRef.current.forEach((card, i) => {
             if (!card) return;
 
-           
             if (currentLength >= cardLengths[i]) {
               gsap.to(card, {
                 opacity: 1,
@@ -69,17 +73,16 @@ const EducationPage = () => {
             } else {
               gsap.to(card, {
                 opacity: 0,
-                y: 20,
+                y: 40,
                 duration: 0.3,
                 ease: "power2.in",
               });
             }
 
-            
             const point = path.getPointAtLength(cardLengths[i]);
-            card.style.top = `${point.y}px`;
 
-           
+            // ✅ KEY FIX: push card BELOW the path
+            card.style.top = `${point.y + 60}px`;
           });
         },
       },
@@ -92,7 +95,10 @@ const EducationPage = () => {
 
   return (
     <div className="timeline-container relative w-full min-h-[220vh] bg-bg-primary overflow-hidden border-bg-tertiary border-dotted border-2 border-t-0">
-      <h1 className="text-text-primary text-center font-thin text-2xl pt-4">Education</h1>
+      <h1 className="text-text-primary text-center font-thin text-2xl pt-4">
+        Education
+      </h1>
+
       <svg
         width="100%"
         height="1500"
@@ -113,19 +119,18 @@ const EducationPage = () => {
         />
       </svg>
 
-      
       {Education.map((card, i) => {
-   
-        const positionClass = i % 2 === 0
-          ? "left-[45%] sm:left-[10%] md:left-[45%] lg:left-[45%]"
-          : "left-[55%] sm:left-[10%] md:left-[55%] lg:left-[55%]";
+        const positionClass =
+          i % 2 === 0
+            ? "left-[45%] sm:left-[10%] md:left-[45%] lg:left-[45%]"
+            : "left-[55%] sm:left-[10%] md:left-[55%] lg:left-[55%]";
 
         return (
           <div
             key={i}
             ref={(el) => (cardsRef.current[i] = el)}
             className={`absolute ${positionClass} w-[260px] lg:w-[360px] bg-bg-secondary text-text-primary p-4 rounded-xl shadow-xl opacity-0`}
-            style={{ transform: "translateX(-50%)" }} 
+            style={{ transform: "translateX(-50%)" }}
           >
             <h3 className="text-xl font-bold">{card.title}</h3>
             <p className="text-sm text-gray-400">{card.institute}</p>
@@ -134,7 +139,6 @@ const EducationPage = () => {
           </div>
         );
       })}
-      
     </div>
   );
 };
