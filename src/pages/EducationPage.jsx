@@ -28,7 +28,7 @@ const EducationPage = () => {
       title: "University",
       institute: "University Institute of Technology RGPV, Bhopal",
       date: "2023 - 2027",
-      description: "B.Tech in Information Technology [CGPA : 6.94 (upto 4th semester)]",
+      description: "B.Tech in Information Technology [CGPA : 7.4 (upto 5th semester)]",
     },
   ];
 

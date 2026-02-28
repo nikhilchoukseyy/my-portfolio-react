@@ -1,6 +1,4 @@
 import React from 'react'
-import DesktopNavbar from '../components/DesktopNavbar'
-import MobileNavbar from '../components/MobileNavbar'
 import { FaReact } from "react-icons/fa";
 import { FaHtml5 } from "react-icons/fa";
 import { IoLogoCss3 } from "react-icons/io5";
@@ -16,7 +14,7 @@ import { FaGithub } from "react-icons/fa";
 import { SiPostman } from "react-icons/si";
 import { RiVercelLine } from "react-icons/ri";
 import { SiRender } from "react-icons/si";
-import { easeInOut, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 
 const containerVariants = {
@@ -49,7 +47,7 @@ const SkillsPage = () => {
       whileInView="show"
       viewport={{ once: true, amount: 0.2 }}
       className='bg-bg-primary min-h-screen flex flex-col items-center justify-center text-text-primary border-bg-tertiary border-dotted border-2 border-t-0 py-2 overflow-hidden'>
-      <h1 className='font-thin text-2xl py-6 '>Skils</h1>
+      <h1 className='font-thin text-2xl py-6 '>Skills</h1>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2  gap-4 md:gap-12 [&>*]:px-2 [&>*]:py-2 [&>*]:border-2 [&>*]:md:size-72 [&>*]:size-48 [&>*]:w-64 [&>*]:bg-bg-buttons [&>*]:border-bg-buttons [&>*]:shadow-lg [&>*]:rounded-2xl '>
         <motion.div
           variants={childrenVariants}

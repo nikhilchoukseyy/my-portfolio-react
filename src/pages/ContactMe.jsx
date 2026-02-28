@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import emailjs from 'emailjs-com';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CiLinkedin } from "react-icons/ci";
-import { FaGithub } from "react-icons/fa";
-import { MdOutlineEmail } from "react-icons/md";
-import { SiLeetcode } from "react-icons/si";
+import { SOCIAL_LINKS } from '../config/socials.config';
 
 const ContactMe = () => {
   const [name, setName] = useState('');
@@ -26,10 +23,10 @@ const ContactMe = () => {
     const templateParams = { from_name: name, from_email: email, message: message };
 
     emailjs.send(
-      'service_caxgn1e',
-      'template_ns7u5uo',
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
       templateParams,
-      'K2HhdHirqNAWTZ6IS'
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
     )
       .then(() => {
         setLoading(false);
@@ -109,23 +106,23 @@ const ContactMe = () => {
       </motion.form>
       <motion.div
         className=' flex flex-row gap-6 opacity-80  text-text-primary '>
-
-        <a href="https://github.com/nikhilchoukseyy">
-          <motion.button
-            onClick={() => { playClick(); }}
-            className='text-2xl hover:-translate-y-1 transition duration-200 flex flex-col items-center'><FaGithub /><h1 className='text-sm'>Github</h1>
-          </motion.button>
-        </a>
-        <a href="https://www.linkedin.com/in/nikhilchoukseyy">
-          <motion.button
-            onClick={() => { playClick(); }}
-            className='text-2xl hover:-translate-y-1 transition duration-200 flex flex-col items-center'><CiLinkedin /><h1 className='text-sm'>Linkedin</h1></motion.button>
-        </a>
-        <a href="https://leetcode.com/u/nikhilchouksey/">
-          <motion.button
-            onClick={() => { playClick(); }}
-            className='text-2xl hover:-translate-y-1 transition duration-200 flex flex-col items-center'><SiLeetcode /><h1 className='text-sm'>Leetcode</h1></motion.button>
-        </a>
+        {SOCIAL_LINKS.map((social) => {
+          const IconComponent = social.icon;
+          return (
+            <a
+              key={social.id}
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={social.ariaLabel}
+            >
+              <motion.button
+                className='text-2xl hover:-translate-y-1 transition duration-200 flex flex-col items-center'>
+                <IconComponent /><h1 className='text-sm'>{social.label}</h1>
+              </motion.button>
+            </a>
+          );
+        })}
       </motion.div>
     </div>
   );

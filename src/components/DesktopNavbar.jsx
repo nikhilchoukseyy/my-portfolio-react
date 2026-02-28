@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from "framer-motion";
-import { Link, useLoaderData } from 'react-router-dom'
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom'
 import { IoMdHome } from "react-icons/io";
 import { GoProjectRoadmap } from "react-icons/go"
 import { FaTools } from "react-icons/fa";
 import { FaUniversity } from "react-icons/fa";
 import { MdContactEmergency } from "react-icons/md";
 import useScrollDirection from '../hooks/useScrollDirection'
-import FadeInUpAnimation from '../hooks/FadeInUpAnimation';
 import { useTheme } from '../context/ThemeContext';
 import { Moon, Sun } from 'lucide-react';
-// import useClickSound from '../hooks/useClickSound';
-// import clickSound from '../assets/clickSound.mp3'
 
 let tabs = [
   { id: 'home', label: 'Home', link: '/', icon: <IoMdHome /> },
@@ -30,8 +26,6 @@ const DesktopNavbar = () => {
   const scrollUp = useScrollDirection();
 
   const { isDark, setIsDark } = useTheme();
-
-  // const playClick = useClickSound(clickSound);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -83,7 +77,7 @@ const DesktopNavbar = () => {
         {tabs.map((tab) => (
           <Link
             key={tab.id}
-            onClick={() => {handleTabClick(tab.id); /*playClick()*/}}
+            onClick={() => {handleTabClick(tab.id)}}
             className={`relative shadow-xl px-2 rounded-lg py-1 text-lg font-medium transition-all duration-300 ${activeTab === tab.id
               ? 'text-text-primary opacity-100 bg-bg-secondary scale-110'
               : 'text-text-primary opacity-40 hover:opacity-100'
@@ -109,9 +103,7 @@ const DesktopNavbar = () => {
           transition={{ duration: 0.5 }}
           onClick={() => {
             setIsDark(!isDark);
-            /*playClick();*/
-          } }
-          
+          }}
           className='hover:bg-bg-secondary p-1 rounded-full'
         >
           {isDark ? <Sun size={28} /> : <Moon size={28} />}
