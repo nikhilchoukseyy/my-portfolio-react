@@ -5,8 +5,10 @@ import quickQr from '../assets/images/quickqr.png'
 import shortcutUrl from '../assets/images/shortcuturl.png'
 import pdftoolsBot from '../assets/images/pdftoolsbot.png'
 import pictureDrive from '../assets/images/picturedrive.jpg'
+import linkedinAutoPoster from '../assets/images/linkedinautoposter.png'
 
 export const PROJECTS = [
+  
   {
     title: "LocateMyBus",
     desc: "LocateMyBus is a real-time bus tracker built for school & college students. Enter your route and track your bus live on an interactive map — no more guessing if it's already gone.",
@@ -14,6 +16,14 @@ export const PROJECTS = [
     github: "https://github.com/nikhilchoukseyy/bus-tracker-.git",
     accent: ["#f59e0b", "#10b981"],
     image: locateMyBus
+  },
+  {
+    title: "LinkedIn AutoPoster",
+    desc: "An automated LinkedIn posting system that generates unique motivational content using Groq LLaMA, creates AI-generated images, and posts automatically — completely free.",
+    live: "https://github.com/nikhilchoukseyy/social-media-post-autoposter.git",
+    github: "https://github.com/nikhilchoukseyy/social-media-post-autoposter.git",
+    accent: ["#0077b5", "#00a0dc"],   
+    image: linkedinAutoPoster          
   },
   {
     title: "Fitness-Point:GYM website",
@@ -27,7 +37,7 @@ export const PROJECTS = [
     title: "PictureDrive",
     desc: "PictureDrive is a Google Drive-like cloud storage bot built inside Telegram. Create folders, upload images, and access your files anytime — powered by a private Telegram channel as the storage backend. No AWS, no costs.",
     live: "https://t.me/drivepicturesbot",
-    github: "https://github.com/nikhilchoukseyy/PictureDrive.git", 
+    github: "https://github.com/nikhilchoukseyy/PictureDrive.git",
     accent: ["#2AABEE", "#1e40af"],
     image: pictureDrive
   },

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import emailjs from 'emailjs-com';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SOCIAL_LINKS } from '../config/socials.config';
+
 
 const ContactMe = () => {
   const [name, setName] = useState('');
@@ -104,26 +104,7 @@ const ContactMe = () => {
           )}
         </motion.button>
       </motion.form>
-      <motion.div
-        className=' flex flex-row gap-6 opacity-80  text-text-primary '>
-        {SOCIAL_LINKS.map((social) => {
-          const IconComponent = social.icon;
-          return (
-            <a
-              key={social.id}
-              href={social.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={social.ariaLabel}
-            >
-              <motion.button
-                className='text-2xl hover:-translate-y-1 transition duration-200 flex flex-col items-center'>
-                <IconComponent /><h1 className='text-sm'>{social.label}</h1>
-              </motion.button>
-            </a>
-          );
-        })}
-      </motion.div>
+      
     </div>
   );
 };

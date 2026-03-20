@@ -11,6 +11,7 @@ import DesktopNavbar from '../components/DesktopNavbar';
 import FadeInUpAnimation from '../hooks/FadeInUpAnimation';
 import useClickSound from '../hooks/useClickSound';
 import clickSound from '../assets/clickSound.mp3'
+import { SOCIAL_LINKS } from '../config/socials.config';
 
 const introPoints = [
   "MERN developer",
@@ -40,7 +41,7 @@ const HomePage = () => {
           />
         </motion.div>
 
-        <div className="h-auto w-[80%] flex flex-col md:flex-col md:items-center items-center justify-center gap-0 md:gap-2 mt-0 mb-0 md:mb-6 text-center px-0">
+        <div className="h-auto w-[80%] flex flex-col md:flex-col md:items-center items-center justify-center gap-0 md:gap-2 mt-0 mb-0 md:mb-4 text-center px-0">
      
           <h1 className="text-3xl md:text-4xl font-extrabold opacity-90 font-google_sans_code">
             Hello{" "}
@@ -91,7 +92,7 @@ const HomePage = () => {
         </div>
 
         <motion.button
-          className="bg-bg-buttons rounded-lg px-4 py-2 text-text-primary transition active:shadow-xs active:bg-opacity-100 cursor-pointer md:mt-8 md:mb-2 active:scale-95 md:active:scale-95 border-0 font-sans md:text-xl mt-0 shadow-xl">
+          className="bg-bg-buttons rounded-lg px-4 py-2 text-text-primary transition active:shadow-xs active:bg-opacity-100 cursor-pointer md:mt-4 md:mb-2 active:scale-95 md:active:scale-95 border-0 font-sans md:text-xl mt-0 shadow-xl">
           <a
             className="flex flex-row gap-2 font-mono"
             href="https://drive.google.com/file/d/1D-jMnsLw0xtz0ZbqqgetzLLGl17aIa1s/view?usp=sharing"
@@ -105,6 +106,26 @@ const HomePage = () => {
 
       <motion.div className='w-[100%]'>
         <MobileNavbar />
+      </motion.div>
+      <motion.div
+        className=' flex flex-row gap-6 opacity-80  text-text-primary '>
+        {SOCIAL_LINKS.map((social) => {
+          const IconComponent = social.icon;
+          return (
+            <a
+              key={social.id}
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={social.ariaLabel}
+            >
+              <motion.button
+                className='text-2xl hover:-translate-y-1 transition duration-200 flex flex-col items-center'>
+                <IconComponent /><h1 className='text-sm'>{social.label}</h1>
+              </motion.button>
+            </a>
+          );
+        })}
       </motion.div>
     </div>
   )
