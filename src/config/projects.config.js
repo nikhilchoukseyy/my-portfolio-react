@@ -5,7 +5,7 @@ import quickQr from '../assets/images/quickqr.png'
 import shortcutUrl from '../assets/images/shortcuturl.png'
 import pdftoolsBot from '../assets/images/pdftoolsbot.png'
 import pictureDrive from '../assets/images/picturedrive.jpg'
-import linkedinAutoPoster from '../assets/images/linkedinautoposter.png'
+import linkedinAutoPoster from '../assets/images/linkedinAutoPoster.png'
 
 export const PROJECTS = [
   
