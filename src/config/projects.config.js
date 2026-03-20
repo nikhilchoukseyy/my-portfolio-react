@@ -1,6 +1,6 @@
 import gyaniWebsite from '../assets/images/gyani_website.png'
 import fitnessPoint from '../assets/images/fitnesspoint.png'
-import locateMyBus from '../assets/images/locatemybus.png'
+import locateMyBus from '../assets/images/locateMyBus.png'
 import quickQr from '../assets/images/quickqr.png'
 import shortcutUrl from '../assets/images/shortcuturl.png'
 import pdftoolsBot from '../assets/images/pdftoolsbot.png'
