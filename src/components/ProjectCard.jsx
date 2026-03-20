@@ -41,6 +41,7 @@ const ProjectCard = () => {
                   src={p.image}
                   alt={p.title}
                   className="w-full h-full object-contain rounded-2xl"
+                  loading="lazy"  
                 />
               </div>
               <div className='flex flex-col text-wrap md:w-[40dvh] text-center'>
