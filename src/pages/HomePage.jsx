@@ -95,7 +95,7 @@ const HomePage = () => {
           className="bg-bg-buttons rounded-lg px-4 py-2 text-text-primary transition active:shadow-xs active:bg-opacity-100 cursor-pointer md:mt-4 md:mb-2 active:scale-95 md:active:scale-95 border-0 font-sans md:text-xl mt-0 shadow-xl">
           <a
             className="flex flex-row gap-2 font-mono"
-            href="https://drive.google.com/file/d/1D-jMnsLw0xtz0ZbqqgetzLLGl17aIa1s/view?usp=sharing"
+            href="https://drive.google.com/file/d/1i6MOAZYU6eQHdQQyyI1jBPFtaOuimwqX/view?usp=sharing"
           >
             <span>View Resume</span>
             <FaFilePdf />

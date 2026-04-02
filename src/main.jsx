@@ -5,8 +5,10 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
 import Preloader from './components/Preloader.jsx'
-
 import {ThemeProvider} from './context/ThemeContext.jsx'
+import { inject } from '@vercel/analytics';
+
+inject();
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

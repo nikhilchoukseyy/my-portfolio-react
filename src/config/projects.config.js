@@ -6,9 +6,18 @@ import shortcutUrl from '../assets/images/shortcuturl.png'
 import pdftoolsBot from '../assets/images/pdftoolsbot.png'
 import pictureDrive from '../assets/images/picturedrive.jpg'
 import linkedinAutoPoster from '../assets/images/linkedinAutoPoster.png'
+import prepTube from '../assets/images/preptube.png'
 
 export const PROJECTS = [
-  
+  {
+    title: "PrepTube",
+    desc: "PrepTube turns any YouTube playlist into a shared study room. Import a playlist, invite collaborators, track per-video progress, keep private notes, build daily streaks, and chat in real time — study together, even when apart.",
+    live: "https://preptube.online/",
+    github: "https://preptube.online/",
+    accent: ["#ef4444", "#f97316"],
+    image: prepTube
+  },
+
   {
     title: "LocateMyBus",
     desc: "LocateMyBus is a real-time bus tracker built for school & college students. Enter your route and track your bus live on an interactive map — no more guessing if it's already gone.",
@@ -22,8 +31,8 @@ export const PROJECTS = [
     desc: "An automated LinkedIn posting system that generates unique motivational content using Groq LLaMA, creates AI-generated images, and posts automatically — completely free.",
     live: "https://github.com/nikhilchoukseyy/social-media-post-autoposter.git",
     github: "https://github.com/nikhilchoukseyy/social-media-post-autoposter.git",
-    accent: ["#0077b5", "#00a0dc"],   
-    image: linkedinAutoPoster          
+    accent: ["#0077b5", "#00a0dc"],
+    image: linkedinAutoPoster
   },
   {
     title: "Fitness-Point:GYM website",
