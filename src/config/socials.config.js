@@ -1,6 +1,7 @@
 import { CiLinkedin } from "react-icons/ci";
 import { FaGithub } from "react-icons/fa";
 import { SiLeetcode } from "react-icons/si";
+import { FaXTwitter } from "react-icons/fa6";
 
 export const SOCIAL_LINKS = [
   {
@@ -23,5 +24,12 @@ export const SOCIAL_LINKS = [
     url: 'https://leetcode.com/u/nikhilchouksey/',
     ariaLabel: 'LeetCode Profile',
     icon: SiLeetcode
+  },
+  {
+    id: 'x',
+    label: 'X',
+    url: 'https://x.com/nikhilchoukseyy/',
+    ariaLabel: 'X Profile',
+    icon: FaXTwitter
   }
 ]

@@ -1,112 +1,200 @@
-import React, { useState } from 'react';
-import emailjs from 'emailjs-com';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from 'react'
+import emailjs from 'emailjs-com'
+import { motion, AnimatePresence } from 'framer-motion'
+import { FiSend, FiCheck, FiAlertCircle } from 'react-icons/fi'
+import { SOCIAL_LINKS } from '../config/socials.config'
 
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
+}
+const fadeIn = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { duration: 0.8 } },
+}
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1, delayChildren: 0.25 } },
+}
 const ContactMe = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [feedback, setFeedback] = useState({ type: '', text: '' });
+  const [form, setForm] = useState({ name: '', email: '', message: '' })
+  const [loading, setLoading] = useState(false)
+  const [feedback, setFeedback] = useState({ type: '', text: '' })
+
+  const handleChange = (e) => setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
 
   const sendEmail = (e) => {
-    e.preventDefault();
-    if (!name || !email || !message) {
-      setFeedback({ type: 'error', text: 'Please fill all fields!' });
-      return;
+    e.preventDefault()
+    if (!form.name || !form.email || !form.message) {
+      setFeedback({ type: 'error', text: 'Please fill in all fields.' })
+      return
     }
 
-    setLoading(true);
-    setFeedback({ type: '', text: '' });
-
-    const templateParams = { from_name: name, from_email: email, message: message };
+    setLoading(true)
+    setFeedback({ type: '', text: '' })
 
     emailjs.send(
       import.meta.env.VITE_EMAILJS_SERVICE_ID,
       import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-      templateParams,
+      { from_name: form.name, from_email: form.email, message: form.message },
       import.meta.env.VITE_EMAILJS_PUBLIC_KEY
     )
       .then(() => {
-        setLoading(false);
-        setFeedback({ type: 'success', text: 'Message sent successfully!' });
-        setName('');
-        setEmail('');
-        setMessage('');
+        setLoading(false)
+        setFeedback({ type: 'success', text: 'Message sent! I\'ll get back to you soon.' })
+        setForm({ name: '', email: '', message: '' })
       })
       .catch(() => {
-        setLoading(false);
-        setFeedback({ type: 'error', text: 'Failed to send message. Try again.' });
-      });
-  };
+        setLoading(false)
+        setFeedback({ type: 'error', text: 'Something went wrong. Try again.' })
+      })
+  }
+
+  const inputClass = "w-full bg-bg-primary border border-text-primary/10 rounded-xl px-4 py-3 text-sm text-text-primary placeholder-text-tertiary/40 font-mono outline-none focus:border-text-primary/30 focus:ring-1 focus:ring-text-primary/10 transition-all duration-200"
 
   return (
-    <div className='bg-bg-primary min-h-screen flex flex-col items-center text-text-primary font-sans border-bg-tertiary border-dotted border-2 border-t-0 gap-4'>
-      <h1 className='text-2xl font-thin mb-8 mt-4 text-center'>Contact Me</h1>
+    <section className="bg-bg-primary min-h-screen flex flex-col items-center justify-center text-text-primary border-bg-tertiary border-dotted border-2 border-t-0 py-16 px-5 pb-28 sm:pb-16">
 
-      <motion.form
-        className='bg-bg-buttons p-6 rounded-2xl flex flex-col gap-6 w-[90%] md:w-[50%] shadow-lg items-center mb-28 text-text-primary'
-        onSubmit={sendEmail}
+      {/* Header */}
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="text-center mb-10"
       >
-        <input
-          type="text"
-          placeholder="Enter your name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className='px-4 py-2 shadow-xl rounded-lg bg-bg-buttons2 outline-none w-full md:w-[60%] '
-        />
-
-        <input
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className='px-4 py-2 shadow-xl rounded-lg bg-bg-buttons2 outline-none w-full md:w-[60%] '
-        />
-
-        <textarea
-          placeholder="Write your message here..."
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          className='px-4 py-2 shadow-xl rounded-lg bg-bg-buttons2 outline-none w-full h-32 resize-none md:w-[60%] '
-        />
-
-        <AnimatePresence>
-          {feedback.text && (
-            <motion.p
-              key={feedback.text}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.3 }}
-              className={`text-center ${feedback.type === 'success' ? 'text-green-500' : 'text-red-500'}`}
-            >
-              {feedback.text}
-            </motion.p>
-          )}
-        </AnimatePresence>
-
-        <motion.button
-          type="submit"
-          disabled={loading}
-          className={`px-4 py-2 shadow-xl active:scale-95 hover:shadow-2xl rounded-lg bg-bg-buttons2 hover:bg-opacity-80 transition duration-300 w-full md:w-[40%] mx-auto flex justify-center items-center gap-2`}
-          animate={feedback.type === 'error' ? { x: [0, -5, 5, -5, 5, 0] } : {}}
-          transition={{ duration: 0.3 }}
+        <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-text-tertiary/60 block mb-2">
+          Let's connect
+        </span>
+        <h2
+          className="text-3xl sm:text-4xl font-black tracking-tight"
+          style={{ fontFamily: "'Google Sans Code', monospace" }}
         >
-          {loading ? (
-            <span className='animate-spin border-2 border-white border-t-transparent rounded-full w-5 h-5'></span>
-          ) : (
-            'Send Message'
-          )}
-        </motion.button>
-      </motion.form>
-      
-    </div>
-  );
-};
+          Contact Me
+        </h2>
+        <div className="w-8 h-px bg-text-primary/20 mx-auto mt-4" />
+      </motion.div>
 
-export default ContactMe;
+      <motion.div
+        initial={{ opacity: 0, y: 28 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="w-full max-w-md"
+      >
+        <div className="bg-bg-secondary border border-text-primary/6 rounded-2xl p-6 sm:p-8 shadow-xl">
+
+          <form onSubmit={sendEmail} className="flex flex-col gap-4">
+            {/* Name */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[10px] font-mono tracking-widest uppercase text-text-tertiary/50">Name</label>
+              <input
+                type="text"
+                name="name"
+                placeholder="Your name"
+                value={form.name}
+                onChange={handleChange}
+                className={inputClass}
+              />
+            </div>
+
+            {/* Email */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[10px] font-mono tracking-widest uppercase text-text-tertiary/50">Email</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="your@email.com"
+                value={form.email}
+                onChange={handleChange}
+                className={inputClass}
+              />
+            </div>
+
+            {/* Message */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[10px] font-mono tracking-widest uppercase text-text-tertiary/50">Message</label>
+              <textarea
+                name="message"
+                placeholder="What's on your mind..."
+                value={form.message}
+                onChange={handleChange}
+                rows={5}
+                className={`${inputClass} resize-none`}
+              />
+            </div>
+
+            {/* Feedback */}
+            <AnimatePresence>
+              {feedback.text && (
+                <motion.div
+                  key="feedback"
+                  initial={{ opacity: 0, y: -8, height: 0 }}
+                  animate={{ opacity: 1, y: 0, height: 'auto' }}
+                  exit={{ opacity: 0, y: -8, height: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className={`flex items-center gap-2 text-xs font-mono rounded-lg px-3 py-2.5 ${feedback.type === 'success'
+                    ? 'bg-green-500/10 text-green-400 border border-green-500/20'
+                    : 'bg-red-500/10 text-red-400 border border-red-500/20'
+                    }`}
+                >
+                  {feedback.type === 'success' ? <FiCheck size={13} /> : <FiAlertCircle size={13} />}
+                  {feedback.text}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Submit */}
+            <motion.button
+              type="submit"
+              disabled={loading}
+              whileHover={{ scale: loading ? 1 : 1.02, y: loading ? 0 : -1 }}
+              whileTap={{ scale: 0.97 }}
+              animate={feedback.type === 'error' ? { x: [0, -6, 6, -4, 4, 0] } : {}}
+              transition={{ duration: 0.3 }}
+              className={`flex items-center justify-center gap-2 w-full bg-text-primary text-bg-primary font-mono font-bold text-sm py-3 rounded-xl shadow-lg transition-opacity mt-1 ${loading ? 'opacity-60 cursor-not-allowed' : 'hover:opacity-90'
+                }`}
+            >
+              {loading ? (
+                <span className="w-4 h-4 rounded-full border-2 border-bg-primary/30 border-t-bg-primary animate-spin" />
+              ) : (
+                <>
+                  <FiSend size={14} />
+                  Send Message
+                </>
+              )}
+            </motion.button>
+          </form>
+        </div>
+      </motion.div>
+      <motion.div
+        variants={container}
+        className="relative z-10 flex gap-5 sm:gap-7 opacity-60 hover:opacity-100 transition-opacity duration-500 mb-8 mt-8"
+      >
+        {SOCIAL_LINKS.map((social) => {
+          const Icon = social.icon
+          return (
+            <motion.a
+              key={social.id}
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={social.ariaLabel}
+              variants={fadeUp}
+              whileHover={{ y: -3 }}
+              className="flex flex-col items-center gap-1.5 group"
+            >
+              <span className="text-xl sm:text-2xl group-hover:scale-110 transition-transform text-text-primary">
+                <Icon />
+              </span>
+              <span className="text-[10px] font-mono tracking-wide text-text-tertiary">{social.label}</span>
+            </motion.a>
+          )
+        })}
+      </motion.div>
+    </section>
+  )
+}
+
+export default ContactMe

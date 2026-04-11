@@ -1,146 +1,126 @@
-import React, { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import React, { useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger)
+
+const Education = [
+  {
+    id: '10th',
+    year: '2020',
+    title: '10th Grade',
+    institute: 'Vivekanand Higher Secondary School',
+    result: '94.6%',
+    tag: 'MPBSE',
+  },
+  {
+    id: '12th',
+    year: '2022',
+    title: '12th Grade',
+    institute: 'Vivekanand Higher Secondary School',
+    result: '90.6%',
+    tag: 'PCM · MPBSE',
+  },
+  {
+    id: 'uni',
+    year: '2023 – 2027',
+    title: 'B.Tech in Information Technology',
+    institute: 'University Institute of Technology, RGPV Bhopal',
+    result: 'CGPA 7.4',
+    tag: 'Current · 5th Sem',
+  },
+]
+
+const cardVariants = {
+  hidden: { opacity: 0, x: -24 },
+  show: (i) => ({
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.65, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] },
+  }),
+}
 
 const EducationPage = () => {
-  const pathRef = useRef(null);
-  const cardsRef = useRef([]);
-
-  const Education = [
-    {
-      id: "10th",
-      title: "10th Class",
-      institute: "Vivekanand Higher Secondary School",
-      date: "2020",
-      description: "Finished 10th grade with 94.6%",
-    },
-    {
-      id: "12th",
-      title: "12th Class",
-      institute: "Vivekanand Higher Secondary School",
-      date: "2022",
-      description: "Completed 12th with 90.6% (PCM)",
-    },
-    {
-      id: "uni",
-      title: "University",
-      institute: "University Institute of Technology RGPV, Bhopal",
-      date: "2023 - 2027",
-      description: "B.Tech in Information Technology [CGPA : 7.4 (upto 5th semester)]",
-    },
-  ];
-
-  useEffect(() => {
-    const path = pathRef.current;
-    const pathLength = path.getTotalLength();
-
-    path.style.strokeDasharray = pathLength;
-    path.style.strokeDashoffset = pathLength;
-
-    const cardLengths = Education.map((_, i) => {
-      return (pathLength / (Education.length + 1)) * (i + 1);
-    });
-
-    // Initial animation offset
-    cardsRef.current.forEach((card) => {
-      if (!card) return;
-      gsap.set(card, { y: 40, opacity: 0 });
-    });
-
-    gsap.to(path, {
-      strokeDashoffset: 0,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".timeline-container",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: true,
-        onUpdate: (self) => {
-          const currentLength = pathLength * self.progress;
-
-          cardsRef.current.forEach((card, i) => {
-            if (!card) return;
-
-            if (currentLength >= cardLengths[i]) {
-              gsap.to(card, {
-                opacity: 1,
-                y: 0,
-                duration: 0.3,
-                ease: "power2.out",
-              });
-            } else {
-              gsap.to(card, {
-                opacity: 0,
-                y: 40,
-                duration: 0.3,
-                ease: "power2.in",
-              });
-            }
-
-            const point = path.getPointAtLength(cardLengths[i]);
-
-            // ✅ KEY FIX: push card BELOW the path
-            card.style.top = `${point.y + 60}px`;
-          });
-        },
-      },
-    });
-
-    const handleResize = () => ScrollTrigger.refresh();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   return (
-    <div className="timeline-container relative w-full min-h-[220vh] bg-bg-primary overflow-hidden border-bg-tertiary border-dotted border-2 border-t-0">
-      <h1 className="text-text-primary text-center font-thin text-2xl pt-4">
-        Education
-      </h1>
+    <section className="bg-bg-primary min-h-screen flex flex-col items-center justify-center text-text-primary border-bg-tertiary border-dotted border-2 border-t-0 py-16 px-5 overflow-hidden">
 
-      <svg
-        width="100%"
-        height="1500"
-        className="absolute left-0 top-0 z-0"
-        viewBox="0 0 400 1500"
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="text-center mb-14"
       >
-        <path
-          ref={pathRef}
-          d="
-            M200,50
-            C300,250 100,450 200,650
-            C300,850 100,1050 200,1250
-          "
-          stroke="var(--text-primary)"
-          strokeWidth="6"
-          fill="none"
-          strokeLinecap="round"
-        />
-      </svg>
+        <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-text-tertiary/60 block mb-2">
+          Academic background
+        </span>
+        <h2
+          className="text-3xl sm:text-4xl font-black tracking-tight"
+          style={{ fontFamily: "'Google Sans Code', monospace" }}
+        >
+          Education
+        </h2>
+        <div className="w-8 h-px bg-text-primary/20 mx-auto mt-4" />
+      </motion.div>
 
-      {Education.map((card, i) => {
-        const positionClass =
-          i % 2 === 0
-            ? "left-[45%] sm:left-[10%] md:left-[45%] lg:left-[45%]"
-            : "left-[55%] sm:left-[10%] md:left-[55%] lg:left-[55%]";
+      {/* Timeline */}
+      <div className="relative w-full max-w-xl flex flex-col gap-0">
 
-        return (
-          <div
-            key={i}
-            ref={(el) => (cardsRef.current[i] = el)}
-            className={`absolute ${positionClass} w-[260px] lg:w-[360px] bg-bg-secondary text-text-primary p-4 rounded-xl shadow-xl opacity-0`}
-            style={{ transform: "translateX(-50%)" }}
+        {/* Vertical line */}
+        <div className="absolute left-[18px] sm:left-[22px] top-2 bottom-2 w-px bg-text-primary/10" />
+
+        {Education.map((edu, i) => (
+          <motion.div
+            key={edu.id}
+            custom={i}
+            variants={cardVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.4 }}
+            className="relative flex gap-5 sm:gap-7 pb-10 last:pb-0"
           >
-            <h3 className="text-xl font-bold">{card.title}</h3>
-            <p className="text-sm text-gray-400">{card.institute}</p>
-            <p className="text-sm text-gray-400 italic">{card.date}</p>
-            <p className="mt-2">{card.description}</p>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
+            {/* Dot */}
+            <div className="relative z-10 flex-shrink-0 mt-1">
+              <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-bg-secondary border border-text-primary/15 flex items-center justify-center shadow-sm">
+                <span className="text-[10px] sm:text-[11px] font-black font-mono text-text-primary/60 tabular-nums leading-none text-center px-0.5">
+                  {edu.year.split('–')[0].trim().slice(-2)}
+                </span>
+              </div>
+            </div>
 
-export default EducationPage;
+            {/* Card */}
+            <motion.div
+              whileHover={{ x: 4 }}
+              transition={{ duration: 0.2 }}
+              className="flex-1 bg-bg-secondary border border-text-primary/6 rounded-2xl p-4 sm:p-5 hover:border-text-primary/15 transition-colors duration-300 shadow-sm"
+            >
+              <div className="flex items-start justify-between gap-2 flex-wrap mb-1">
+                <h3 className="text-sm sm:text-base font-bold tracking-tight leading-snug" style={{ fontFamily: "'Google Sans Code', monospace" }}>
+                  {edu.title}
+                </h3>
+                <span className="text-xs font-mono text-text-tertiary/50 whitespace-nowrap">{edu.year}</span>
+              </div>
+
+              <p className="text-xs sm:text-sm text-text-tertiary/60 mb-3 leading-snug">{edu.institute}</p>
+
+              <div className="flex items-center gap-2 flex-wrap">
+                {/* Result badge */}
+                <span className="inline-block bg-bg-primary border border-text-primary/10 text-text-primary font-mono font-bold text-xs px-3 py-1 rounded-lg">
+                  {edu.result}
+                </span>
+                {/* Tag */}
+                <span className="text-[10px] font-mono text-text-tertiary/40 tracking-wide">
+                  {edu.tag}
+                </span>
+              </div>
+            </motion.div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+export default EducationPage

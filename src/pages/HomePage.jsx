@@ -1,134 +1,250 @@
-import React, { useState } from 'react';
-import { motion } from "framer-motion";
-import { Typewriter } from 'react-simple-typewriter';
+import React, { useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 import avatarPhoto from '../assets/nikhilcodinghoodie.png'
-import { FaFilePdf } from "react-icons/fa";
-import { CiLinkedin } from "react-icons/ci";
-import { FaGithub } from "react-icons/fa";
-import { MdOutlineEmail } from "react-icons/md";
-import MobileNavbar from '../components/MobileNavbar';
-import DesktopNavbar from '../components/DesktopNavbar';
-import FadeInUpAnimation from '../hooks/FadeInUpAnimation';
-import useClickSound from '../hooks/useClickSound';
+import { FaFilePdf, FaGithub, FaLinkedin } from 'react-icons/fa'
+import { SiLeetcode } from 'react-icons/si'
+import { MdOutlineEmail } from 'react-icons/md'
+import MobileNavbar from '../components/MobileNavbar'
+import DesktopNavbar from '../components/DesktopNavbar'
+import useClickSound from '../hooks/useClickSound'
 import clickSound from '../assets/clickSound.mp3'
-import { SOCIAL_LINKS } from '../config/socials.config';
+import { SOCIAL_LINKS } from '../config/socials.config'
 
-const introPoints = [
-  "MERN developer",
-  "DSA problem solver",
-  "SIH2025 Finalist",
-];
+/* ── animation variants ── */
+const stagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09, delayChildren: 0.15 } },
+}
+const slideUp = {
+  hidden: { opacity: 0, y: 36 },
+  show:   { opacity: 1, y: 0,  transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+}
+const fadeIn = {
+  hidden: { opacity: 0 },
+  show:   { opacity: 1,        transition: { duration: 0.9, ease: 'easeOut' } },
+}
+
+/* ── stat chip ── */
+const Stat = ({ value, label }) => (
+  <div className="flex flex-col items-center gap-0.5 px-3 sm:px-4">
+    <span className="text-base sm:text-lg font-black text-text-primary font-mono tabular-nums">{value}</span>
+    <span className="text-[9px] sm:text-[10px] font-mono tracking-widest uppercase text-text-tertiary/60 whitespace-nowrap">{label}</span>
+  </div>
+)
+
+/* ── skill pill ── */
+const Pill = ({ children }) => (
+  <span className="text-[10px] sm:text-xs font-mono px-2.5 py-1 rounded-lg bg-bg-primary border border-text-primary/10 text-text-tertiary/70 whitespace-nowrap">
+    {children}
+  </span>
+)
+
+/* ── inline highlight ── */
+const Hl = ({ children }) => (
+  <span className="text-text-primary font-semibold">{children}</span>
+)
 
 const HomePage = () => {
+  const playClick = useClickSound(clickSound)
+  const glowRef = useRef(null)
 
-  const playClick = useClickSound(clickSound);
+  useEffect(() => {
+    const el = glowRef.current
+    if (!el) return
+    const move = (e) => {
+      el.style.left = `${e.clientX}px`
+      el.style.top  = `${e.clientY}px`
+    }
+    window.addEventListener('mousemove', move)
+    return () => window.removeEventListener('mousemove', move)
+  }, [])
 
   return (
-    <div className='bg-bg-primary min-h-screen w-full overflow-x-hidden flex flex-col items-center text-text-primary font-sans gap-4 border-bg-tertiary border-dotted border-2'>
-      <DesktopNavbar />
-      <div className='flex flex-col items-center justify-center text-center gap-4 mt-20 md:mt-32 md:gap-4'>
+    <div className="relative bg-bg-primary min-h-screen w-full overflow-x-hidden flex flex-col text-text-primary font-sans border-bg-tertiary border-dotted border-2">
 
+      {/* ── cursor glow (desktop) ── */}
+      <div
+        ref={glowRef}
+        className="pointer-events-none fixed z-0 hidden lg:block w-[600px] h-[600px] rounded-full"
+        style={{
+          transform: 'translate(-50%, -50%)',
+          background: 'radial-gradient(circle, rgba(255,255,255,0.035) 0%, transparent 60%)',
+          transition: 'left 0.12s ease, top 0.12s ease',
+        }}
+      />
+
+      {/* ── subtle grid ── */}
+      <div
+        className="pointer-events-none fixed inset-0 z-0 opacity-[0.025]"
+        style={{
+          backgroundImage: `
+            linear-gradient(var(--text-primary) 1px, transparent 1px),
+            linear-gradient(90deg, var(--text-primary) 1px, transparent 1px)
+          `,
+          backgroundSize: '72px 72px',
+        }}
+      />
+
+      <DesktopNavbar />
+
+      {/* ══════════ HERO ══════════ */}
+      <motion.main
+        variants={stagger}
+        initial="hidden"
+        animate="show"
+        className="relative z-10 flex flex-col items-center justify-center min-h-screen pt-16 pb-28 sm:pb-12 px-5 sm:px-8"
+      >
+
+        {/* ── CARD ── */}
         <motion.div
-          initial={{ scale: 0.7 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 1 }}
-          className="w-32 h-32 md:w-56 md:h-56 rounded-full overflow-hidden bg-text-primary shadow-lg flex items-center justify-center"
+          variants={slideUp}
+          className="w-full max-w-lg sm:max-w-xl"
         >
-          <img
-            src={avatarPhoto}
-            alt="Avatar"
-            className="w-full h-full object-cover rounded-full border-4 border-bg-primary"
+          <div className="relative rounded-3xl border border-text-primary/8 bg-bg-secondary/50 backdrop-blur-sm shadow-2xl overflow-hidden">
+
+            {/* card top accent line */}
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-text-primary/20 to-transparent" />
+
+            {/* ── CARD INNER ── */}
+            <div className="p-6 sm:p-8 flex flex-col gap-6">
+
+              {/* ── Row 1: Avatar + Name + Badge ── */}
+              <div className="flex items-center gap-4 sm:gap-5">
+
+                {/* Avatar */}
+                <div className="relative flex-shrink-0 w-[72px] h-[72px] sm:w-[90px] sm:h-[90px]">
+                  {/* spinning ring */}
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
+                    className="absolute inset-[-2px] rounded-full"
+                    style={{
+                      background: 'conic-gradient(from 0deg, transparent 50%, rgba(255,255,255,0.55) 75%, transparent 100%)',
+                      borderRadius: '9999px',
+                    }}
+                  />
+                  <div className="absolute inset-[2px] rounded-full overflow-hidden bg-bg-primary">
+                    <img
+                      src={avatarPhoto}
+                      alt="Nikhil Chouksey"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  {/* online dot */}
+                  <span className="absolute bottom-0.5 right-0.5 w-3 h-3 rounded-full bg-green-400 border-2 border-bg-secondary ring-1 ring-green-400/30" />
+                </div>
+
+                {/* Name + title */}
+                <div className="flex flex-col gap-1 min-w-0">
+                  <div className="overflow-hidden">
+                    <motion.h1
+                      initial={{ y: '100%' }}
+                      animate={{ y: 0 }}
+                      transition={{ duration: 0.75, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                      className="text-2xl sm:text-3xl font-black tracking-tight leading-none text-text-primary"
+                      style={{ fontFamily: "'Google Sans Code', monospace" }}
+                    >
+                      Nikhil Chouksey
+                    </motion.h1>
+                  </div>
+                  <p className="text-xs sm:text-sm text-yellow-500 font-mono">
+                    Full-Stack Developer
+                  </p>
+                  
+                </div>
+              </div>
+
+              {/* ── Divider ── */}
+              <div className="h-px bg-text-primary/6" />
+
+              {/* ── Row 2: Description ── */}
+              <p className="text-sm sm:text-[15px] text-text-tertiary/80 leading-relaxed">
+                <Hl >SIH 2025 National Finalist</Hl> (Top 5) . I'm building production-ready apps with{' '}
+                <Hl>MERN stack</Hl>, <Hl>Python</Hl> &amp; <Hl>AI integrations</Hl>.{' '}
+                Solved <Hl>250+ LeetCode</Hl> problems.
+              </p>
+
+              
+
+              
+
+              {/* ── Divider ── */}
+              <div className="h-px bg-text-primary/6" />
+
+              {/* ── Row 5: CTAs ── */}
+              <div className="flex gap-3 flex-wrap">
+                <a
+                  href="https://drive.google.com/file/d/1i6MOAZYU6eQHdQQyyI1jBPFtaOuimwqX/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1"
+                >
+                  <motion.button
+                    whileHover={{ scale: 1.03, y: -1 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="w-full flex items-center justify-center gap-2 bg-text-primary text-bg-primary font-mono font-bold text-xs sm:text-sm py-3 rounded-xl shadow-lg"
+                  >
+                    <FaFilePdf size={13} />
+                    View Resume
+                  </motion.button>
+                </a>
+
+                <motion.button
+                  whileHover={{ scale: 1.03, y: -1 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="flex-1 flex items-center justify-center gap-2 border border-text-primary/20 text-text-primary font-mono text-xs sm:text-sm py-3 rounded-xl hover:bg-bg-primary/60 transition-colors"
+                >
+                  Let's Talk →
+                </motion.button>
+              </div>
+
+              {/* ── Row 6: Social links ── */}
+              {/* <div className="flex items-center justify-center gap-5 sm:gap-6 pt-1">
+                {SOCIAL_LINKS.map((social) => {
+                  const Icon = social.icon
+                  return (
+                    <motion.a
+                      key={social.id}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.ariaLabel}
+                      whileHover={{ y: -3, opacity: 1 }}
+                      className="flex flex-col items-center gap-1 text-text-primary/40 hover:text-text-primary transition-colors duration-200"
+                    >
+                      <span className="text-lg sm:text-xl"><Icon /></span>
+                      <span className="text-[9px] font-mono tracking-wide">{social.label}</span>
+                    </motion.a>
+                  )
+                })}
+              </div> */}
+
+            </div>{/* end card inner */}
+
+            {/* card bottom accent line */}
+            <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-text-primary/10 to-transparent" />
+          </div>
+        </motion.div>
+
+        {/* ── scroll hint ── */}
+        <motion.div
+          variants={fadeIn}
+          className="flex flex-col items-center gap-2 mt-8 opacity-20"
+        >
+          <span className="text-[9px] font-mono tracking-[0.3em] uppercase">scroll</span>
+          <motion.div
+            animate={{ y: [0, 7, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+            className="w-px h-7 bg-text-primary"
           />
         </motion.div>
 
-        <div className="h-auto w-[80%] flex flex-col md:flex-col md:items-center items-center justify-center gap-0 md:gap-2 mt-0 mb-0 md:mb-4 text-center px-0">
-     
-          <h1 className="text-3xl md:text-4xl font-extrabold opacity-90 font-google_sans_code">
-            Hello{" "}
-            <motion.span
-              style={{ display: "inline-block", transformOrigin: "70% 70%" }}
-              animate={{ rotate: [0, 20, -10, 20, -6, 15, 0] }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                repeatDelay: 2,
-                ease: "easeInOut",
-              }}
-            >
-              👋
-            </motion.span>{" "}
-            I am Nikhil Chouksey
-          </h1>
+      </motion.main>
 
-          <motion.ul
-            className="mt-2 md:text-xl text-md text-text-tertiary font-thin list-disc text-center md:w-full px-0 ml-2 mr-2 font-google_sans_code md:text-center"
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 0.8,
-                transition: { staggerChildren: 0.4 },
-              },
-            }}
-          >
-            Software Engineering student,{" "}
-            <span className="text-text-primary font-semibold underline underline-offset-4 decoration-text-primary">
-              SIH 2025 Finalist
-            </span>{" "}
-            with experience in{" "}
-            <span className="text-text-primary font-semibold underline underline-offset-4 decoration-text-primary">
-              MERN stack
-            </span>
-            ,{" "}
-            <span className="text-text-primary font-semibold underline underline-offset-4 decoration-text-primary">
-              Python
-            </span>
-            , and{" "}
-            <span className="text-text-primary font-semibold underline underline-offset-4 decoration-text-primary">
-              DSA problem solving
-            </span>
-          </motion.ul>
-        </div>
-
-        <motion.button
-          className="bg-bg-buttons rounded-lg px-4 py-2 text-text-primary transition active:shadow-xs active:bg-opacity-100 cursor-pointer md:mt-4 md:mb-2 active:scale-95 md:active:scale-95 border-0 font-sans md:text-xl mt-0 shadow-xl">
-          <a
-            className="flex flex-row gap-2 font-mono"
-            href="https://drive.google.com/file/d/1i6MOAZYU6eQHdQQyyI1jBPFtaOuimwqX/view?usp=sharing"
-          >
-            <span>View Resume</span>
-            <FaFilePdf />
-          </a>
-        </motion.button>
-        
-      </div>
-
-      <motion.div className='w-[100%]'>
-        <MobileNavbar />
-      </motion.div>
-      <motion.div
-        className=' flex flex-row gap-6 opacity-80  text-text-primary '>
-        {SOCIAL_LINKS.map((social) => {
-          const IconComponent = social.icon;
-          return (
-            <a
-              key={social.id}
-              href={social.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={social.ariaLabel}
-            >
-              <motion.button
-                className='text-2xl hover:-translate-y-1 transition duration-200 flex flex-col items-center'>
-                <IconComponent /><h1 className='text-sm'>{social.label}</h1>
-              </motion.button>
-            </a>
-          );
-        })}
-      </motion.div>
+      <MobileNavbar />
     </div>
   )
 }
 
-export default HomePage;
+export default HomePage

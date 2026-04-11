@@ -1,148 +1,141 @@
 import React from 'react'
-import { FaReact } from "react-icons/fa";
-import { FaHtml5 } from "react-icons/fa";
-import { IoLogoCss3 } from "react-icons/io5";
-import { BiLogoJavascript } from "react-icons/bi";
-import { FaNode } from "react-icons/fa";
-import { SiExpress } from "react-icons/si";
-import { SiMongodb } from "react-icons/si";
-import { AiOutlinePython } from "react-icons/ai";
-import { FaPython } from "react-icons/fa";
-import { FaJava } from "react-icons/fa";
-import { IoLogoJavascript } from "react-icons/io";
-import { FaGithub } from "react-icons/fa";
-import { SiPostman } from "react-icons/si";
-import { RiVercelLine } from "react-icons/ri";
-import { SiRender } from "react-icons/si";
-import { motion } from "framer-motion";
-
+import { FaReact, FaHtml5, FaNode, FaJava, FaGithub, FaPython } from 'react-icons/fa'
+import { IoLogoCss3, IoLogoJavascript } from 'react-icons/io5'
+import { BiLogoJavascript } from 'react-icons/bi'
+import { SiExpress, SiMongodb, SiPostman, SiRender, SiTailwindcss ,SiFramer,SiGreensock ,SiSocketdotio,SiSupabase,SiRailway} from 'react-icons/si'
+import { AiOutlineApi } from 'react-icons/ai'
+import { RiVercelLine } from 'react-icons/ri'
+import { motion } from 'framer-motion'
 
 const containerVariants = {
-  hidden: {
-    opacity: 1
-  },
+  hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.3,
-      when: "beforeChildren",
-    }
-  }
+    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+  },
+}
+const cardVariants = {
+  hidden: { opacity: 0, y: 40 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 }
 
-const childrenVariants = {
-  hidden: { opacity: 0, y: 50 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.3, ease: "easeInOut" }
-  }
-}
+const SKILL_GROUPS = [
+  {
+    title: 'Frontend',
+    accent: 'text-blue-400',
+    skills: [
+      { icon: FaReact, label: 'React', color: 'text-blue-400' },
+      { icon: FaHtml5, label: 'HTML5', color: 'text-orange-400' },
+      { icon: IoLogoCss3, label: 'CSS3', color: 'text-blue-500' },
+      { icon: BiLogoJavascript, label: 'JavaScript', color: 'text-yellow-300' },
+      { icon: SiTailwindcss, label: 'Tailwind', color: 'text-cyan-400' },
+      { icon: SiFramer, label: 'Motion', color: 'text-pink-400' },
+      { icon: SiGreensock, label: 'GSAP', color: 'text-green-400' },
+
+    ],
+  },
+  {
+    title: 'Backend',
+    accent: 'text-green-400',
+    skills: [
+      { icon: FaNode, label: 'Node.js', color: 'text-green-500' },
+      { icon: SiExpress, label: 'Express', color: 'text-text-primary' },
+      { icon: SiMongodb, label: 'MongoDB', color: 'text-green-400' },
+      { icon: AiOutlineApi, label: 'REST API', color: 'text-purple-400' },
+      { icon: SiSocketdotio, label: 'Socket.io', color: 'text-text-primary' },
+{ icon: SiSupabase,    label: 'Supabase',  color: 'text-emerald-400' },
+    ],
+  },
+  {
+    title: 'Languages',
+    accent: 'text-yellow-300',
+    skills: [
+      { icon: FaPython, label: 'Python', color: 'text-yellow-300' },
+      { icon: FaJava, label: 'Java', color: 'text-red-400' },
+      { icon: IoLogoJavascript, label: 'JavaScript', color: 'text-yellow-300' },
+    ],
+  },
+  {
+    title: 'Tools',
+    accent: 'text-text-tertiary',
+    skills: [
+      { icon: FaGithub, label: 'GitHub', color: 'text-text-primary' },
+      { icon: SiPostman, label: 'Postman', color: 'text-orange-500' },
+      { icon: RiVercelLine, label: 'Vercel', color: 'text-text-primary' },
+      { icon: SiRender, label: 'Render', color: 'text-teal-400' },
+      { icon: SiRailway, label: 'Railway', color: 'text-purple-400' },
+    ],
+  },
+]
+
+const SkillChip = ({ icon: Icon, label, color }) => (
+  <motion.div
+    whileHover={{ scale: 1.08, y: -3 }}
+    whileTap={{ scale: 0.95 }}
+    className="flex flex-col items-center gap-1.5 cursor-default group"
+  >
+    <div className="w-11 h-11 sm:w-13 sm:h-13 rounded-xl bg-bg-primary border border-text-primary/8 flex items-center justify-center shadow-md group-hover:border-text-primary/20 transition-colors duration-200">
+      <Icon className={`w-5 h-5 sm:w-6 sm:h-6 ${color}`} />
+    </div>
+    <span className="text-[9px] sm:text-[10px] font-mono text-text-tertiary tracking-wide text-center leading-tight">
+      {label}
+    </span>
+  </motion.div>
+)
 
 const SkillsPage = () => {
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.2 }}
-      className='bg-bg-primary min-h-screen flex flex-col items-center justify-center text-text-primary border-bg-tertiary border-dotted border-2 border-t-0 py-2 overflow-hidden'>
-      <h1 className='font-thin text-2xl py-6 '>Skills</h1>
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2  gap-4 md:gap-12 [&>*]:px-2 [&>*]:py-2 [&>*]:border-2 [&>*]:md:size-72 [&>*]:size-48 [&>*]:w-64 [&>*]:bg-bg-buttons [&>*]:border-bg-buttons [&>*]:shadow-lg [&>*]:rounded-2xl '>
-        <motion.div
-          variants={childrenVariants}
-          className='text-center h-1/4 hover:scale-105 transition-transform ease-in-out  duration-[1s]'>
-          <h1 className='opacity-70 pb-2 pt-0 text-lg text-text-secondary'>Frontend</h1>
-          <div className='grid grid-cols-3 gap-2 [&>*]:shadow-xl'>
-            <div className='border-1 px-2 py-1 bg-bg-buttons2 rounded-lg items-center justify-center flex flex-col   cursor-pointer active:scale-90 transition w-[1/3] text-blue-500 '>
-              <FaReact className='size-8 md:size-12' />
-              <span className=''>React</span>
-            </div>
-            <div className='border-1 px-2 py-1 bg-bg-buttons2 w-[1/3] rounded-lg items-center justify-center flex flex-col   cursor-pointer active:scale-90 transition text-green-600'>
-              <FaHtml5 className='size-8 md:size-12' />
-              <span className=''>HTML5</span>
-            </div>
-            <div className='border-1 px-2 py-1 bg-bg-buttons2 w-[1/3] rounded-lg items-center justify-center flex flex-col   cursor-pointer active:scale-90 transition text-blue-700 '>
-              <IoLogoCss3 className='size-8 md:size-12' />
-              <span className=''>CSS3</span>
-            </div>
-            <div className='border-1 px-2 py-1 bg-bg-buttons2 w-[1/3] rounded-lg items-center justify-center flex flex-col   cursor-pointer active:scale-90 transition text-yellow-300'>
-              <BiLogoJavascript className='size-8 md:size-12' />
-              <span className=''>JS</span>
-            </div>
-          </div>
+    <section className="bg-bg-primary min-h-screen flex flex-col items-center justify-center text-text-primary border-bg-tertiary border-dotted border-2 border-t-0 py-16 px-5 overflow-hidden">
 
-        </motion.div>
-        <motion.div
-          variants={childrenVariants}
-          className='text-center h-1/4 hover:scale-105 transition-transform ease-in-out  duration-[1s]'>
-          <h1 className='opacity-70 pb-2 pt-0 text-lg text-text-secondary'>Backend</h1>
-          <div className='grid grid-cols-3 gap-2 [&>*]:shadow-xl'>
-            <div className='border-1 px-2 py-1 bg-bg-buttons2 rounded-lg items-center justify-center flex flex-col   cursor-pointer active:scale-90 transition w-[1/3]  text-green-800'>
-              <FaNode className='size-8 md:size-12' />
-              <span className=''>Node.js</span>
-            </div>
-            <div className='border-1 px-2 py-1 bg-bg-buttons2 w-[1/3] rounded-lg items-center justify-center flex flex-col   cursor-pointer active:scale-90 transition text-yellow-300'>
-              <SiExpress className='size-8 md:size-12' />
-              <span className=''>Express.js</span>
-            </div>
-            <div className='border-1 px-2 py-1 bg-bg-buttons2 w-[1/3] rounded-lg items-center justify-center flex flex-col   cursor-pointer active:scale-90 transition text-green-500'>
-              <SiMongodb className='size-8 md:size-12' />
-              <span className=''>MongoDB</span>
-            </div>
-            <div className='border-1 px-2 py-1 bg-bg-buttons2 w-[1/3] rounded-lg items-center justify-center flex flex-col   cursor-pointer active:scale-90 transition text-red-500'>
-              <AiOutlinePython className='size-8 md:size-12' />
-              <span className=''>RestAPI</span>
-            </div>
-          </div>
-        </motion.div>
-        <motion.div
-          variants={childrenVariants}
-          className='text-center h-1/4 hover:scale-105 transition-transform ease-in-out  duration-[1s]'>
-          <h1 className='opacity-70 pb-2 pt-0 text-lg text-text-secondary'>Languages</h1>
-          <div className='grid grid-cols-3 gap-2 [&>*]:shadow-xl'>
-            <div className='border-1 px-2 py-1 bg-bg-buttons2 rounded-lg items-center justify-center flex flex-col   cursor-pointer active:scale-90 transition w-[1/3] text-yellow-200'>
-              <FaPython className='size-8 md:size-12' />
-              <span className=''>Python</span>
-            </div>
-            <div className='border-1 px-2 py-1 bg-bg-buttons2 w-[1/3] rounded-lg items-center justify-center flex flex-col   cursor-pointer active:scale-90 transition text-slate-400'>
-              <FaJava className='size-8 md:size-12' />
-              <span className=''>Java</span>
-            </div>
-            <div className='border-1 px-2 py-1 bg-bg-buttons2 w-[1/3] rounded-lg items-center justify-center flex flex-col   cursor-pointer active:scale-90 transition text-yellow-300'>
-              <IoLogoJavascript className='size-8 md:size-12' />
-              <span className=''>JS</span>
-            </div>
-          </div>
+      {/* Section header */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="text-center mb-12"
+      >
+        <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-text-tertiary/60 block mb-2">
+          What I work with
+        </span>
+        <h2 className="text-3xl sm:text-4xl font-black tracking-tight" style={{ fontFamily: "'Google Sans Code', monospace" }}>
+          Skills
+        </h2>
+        <div className="w-8 h-px bg-text-primary/20 mx-auto mt-4" />
+      </motion.div>
 
-        </motion.div>
-        <motion.div
-          variants={childrenVariants}
-          className='text-center h-1/4 hover:scale-105 transition-transform ease-in-out  duration-[1s]'>
-          <h1 className='opacity-70 pb-2 pt-0 text-lg text-text-secondary'>Tools & Technology</h1>
-          <div className='grid grid-cols-3 gap-2 [&>*]:shadow-xl'>
-            <div className='border-1 px-2 py-1 bg-bg-buttons2 rounded-lg items-center justify-center flex flex-col   cursor-pointer active:scale-90 transition w-[1/3]'>
-              <FaGithub className='size-8 md:size-12' />
-              <span className='text-xs'>Git & Github</span>
+      {/* Cards grid */}
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.1 }}
+        className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 w-full max-w-2xl"
+      >
+        {SKILL_GROUPS.map((group) => (
+          <motion.div
+            key={group.title}
+            variants={cardVariants}
+            className="rounded-2xl bg-bg-secondary border border-text-primary/6 p-5 sm:p-6 hover:border-text-primary/15 transition-colors duration-300 shadow-sm"
+          >
+            {/* Card title */}
+            <div className="flex items-center gap-2 mb-5">
+              <div className={`w-1.5 h-4 rounded-full ${group.accent} opacity-70`} style={{ background: 'currentColor' }} />
+              <h3 className="text-xs sm:text-sm font-mono tracking-widest uppercase text-text-tertiary/70">
+                {group.title}
+              </h3>
             </div>
-            <div className='border-1 px-2 py-1 bg-bg-buttons2 w-[1/3] rounded-lg items-center justify-center flex flex-col   cursor-pointer active:scale-90 transition text-orange-500'>
-              <SiPostman className='size-8 md:size-12' />
-              <span className=''>Postman</span>
-            </div>
-            <div className='border-1 px-2 py-1 bg-bg-buttons2 w-[1/3] rounded-lg items-center justify-center flex flex-col   cursor-pointer active:scale-90 transition text-teal-500'>
-              <RiVercelLine className='size-8 md:size-12' />
-              <span className=''>Vercel</span>
-            </div>
-            <div className='border-1 px-2 py-1 bg-bg-buttons2 w-[1/3] rounded-lg items-center justify-center flex flex-col   cursor-pointer active:scale-90 transition '>
-              <SiRender className='size-8 md:size-12' />
-              <span className=''>Render</span>
-            </div>
-          </div>
 
-        </motion.div>
-      </div>
-    </motion.div>
-
+            {/* Skills row */}
+            <div className="flex flex-wrap gap-4 sm:gap-5">
+              {group.skills.map((skill) => (
+                <SkillChip key={skill.label} {...skill} />
+              ))}
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
+    </section>
   )
 }
 

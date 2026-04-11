@@ -53,7 +53,7 @@ const MobileNavbar = () => {
       initial={{ y: 100 }}
       animate={{ y: scrollUp ? 0 : 100 }}
       transition={{ type: 'tween', duration: 0.5 }}
-      className="w-full h-auto sm:hidden flex justify-center items-center text-center px-4 py-2 bg-bg-primary gap-8 fixed bottom-0 z-50">
+      className="w-full h-auto sm:hidden flex justify-center items-center text-center px-4 py-2 bg-bg-primary/90 backdrop-blur-xl gap-8 fixed bottom-0 z-50">
       {tabs.map((tab) => (
         <button
           key={tab.id}
