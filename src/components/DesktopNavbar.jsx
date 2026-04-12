@@ -64,9 +64,9 @@ const DesktopNavbar = () => {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-2xl sm:text-2xl font-black tracking-tight font-cursive text-text-primary select-none"
+          className="text-xl sm:text-2xl font-black tracking-tight font-cursive text-text-primary select-none"
         >
-          nikhilchouksey<span className="opacity-25">.</span>
+          nikhilchouksey
         </motion.span>
 
         {/* Nav links — hidden on mobile */}

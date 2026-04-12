@@ -2,6 +2,8 @@ import { CiLinkedin } from "react-icons/ci";
 import { FaGithub } from "react-icons/fa";
 import { SiLeetcode } from "react-icons/si";
 import { FaXTwitter } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
+
 
 export const SOCIAL_LINKS = [
   {
@@ -31,5 +33,12 @@ export const SOCIAL_LINKS = [
     url: 'https://x.com/nikhilchoukseyy/',
     ariaLabel: 'X Profile',
     icon: FaXTwitter
+  },
+  {
+    id: 'email',
+    label: 'email',
+    url: 'mailto:imnikhilchouksey@gmail.com',
+    ariaLabel: 'Email Profile',
+    icon: MdEmail
   }
 ]

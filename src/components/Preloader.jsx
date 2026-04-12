@@ -66,7 +66,7 @@ const Preloader = () => {
               style={{ fontFamily: "'Google Sans Code', monospace" }}
             >
               nikhil
-              <span className="opacity-25">.</span>
+              
             </h1>
 
             {/* Progress bar */}
