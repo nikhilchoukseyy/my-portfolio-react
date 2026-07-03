@@ -7,6 +7,8 @@ import pdftoolsBot from '../assets/images/pdftoolsbot.png'
 import pictureDrive from '../assets/images/picturedrive.jpg'
 import linkedinAutoPoster from '../assets/images/linkedinAutoPoster.png'
 import prepTube from '../assets/images/preptube.png'
+import wams from '../assets/images/wams.png'
+import companywisedsa from '../assets/images/companywisedsa.png'
 
 export const PROJECTS = [
   {
@@ -17,13 +19,28 @@ export const PROJECTS = [
     accent: ["#ef4444", "#f97316"],
     image: prepTube
   },
-
+{
+    title: "WAMS[wifi attendance management system]",
+    desc: "This project is a role-based mobile attendance system for colleges or departments. It is designed to reduce proxy attendance.",
+    live: "https://wamshod.vercel.app/",
+    github: "https://github.com/nikhilchoukseyy/wifi-attendence",
+    accent: ["#f97316", "#ef4444"],
+    image: wams
+  },
+  {
+    title: "Company-Wise DSA Platform",
+    desc: "A full-stack web app for practicing data structures and algorithms through a company-wise interview prep experience. It helps users explore companies, review question sets, track progress, bookmark problems, and manage their profile from one place.",
+    live: "https://companywisedsa.vercel.app/",
+    github: "https://github.com/nikhilchoukseyy/companywisedsa",
+    accent: ["#f97316", "#ef4444"],
+    image: companywisedsa
+  },
   {
     title: "LocateMyBus",
     desc: "LocateMyBus is a real-time bus tracker built for school & college students. Enter your route and track your bus live on an interactive map — no more guessing if it's already gone.",
     live: "https://locatemybus.vercel.app/",
     github: "https://github.com/nikhilchoukseyy/bus-tracker-.git",
-    accent: ["#f59e0b", "#10b981"],
+    accent: ["#2AABEE", "#1e40af"],
     image: locateMyBus
   },
   {
