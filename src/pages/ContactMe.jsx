@@ -168,31 +168,7 @@ const ContactMe = () => {
           </form>
         </div>
       </motion.div>
-      <motion.div
-        variants={container}
-        className="relative z-10 flex gap-5 sm:gap-7  transition-opacity duration-500 mb-8 mt-8"
-      >
-        {SOCIAL_LINKS.map((social) => {
-          const Icon = social.icon
-          return (
-            <motion.a
-              key={social.id}
-              href={social.url}
-              target={social.id === 'email' ? '_self' : '_blank'}
-              rel="noopener noreferrer"
-              aria-label={social.ariaLabel}
-              variants={fadeUp}
-              whileHover={{ y: -3 }}
-              className="flex flex-col items-center gap-1.5 group opacity-60 hover:opacity-100"
-            >
-              <span className="text-xl sm:text-2xl group-hover:scale-110 transition-transform text-text-primary">
-                <Icon />
-              </span>
-              <span className="text-[10px] font-mono tracking-wide text-text-tertiary">{social.label}</span>
-            </motion.a>
-          )
-        })}
-      </motion.div>
+      
     </section>
   )
 }

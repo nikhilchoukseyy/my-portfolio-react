@@ -24,6 +24,15 @@ const fadeIn = {
   show:   { opacity: 1,        transition: { duration: 0.9, ease: 'easeOut' } },
 }
 
+/* ── data ── */
+const STATS = [
+  { value: '260+', label: 'LeetCode' },
+  { value: 'Top 5', label: 'SIH 2025' },
+  { value: '12+',   label: 'Shipped' },
+]
+
+const STACK = ['React', 'Node.js', 'Express', 'MongoDB', 'Python']
+
 /* ── stat chip ── */
 const Stat = ({ value, label }) => (
   <div className="flex flex-col items-center gap-0.5 px-3 sm:px-4">
@@ -106,9 +115,11 @@ const HomePage = () => {
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-text-primary/20 to-transparent" />
 
             {/* ── CARD INNER ── */}
-            <div className="p-6 sm:p-8 flex flex-col gap-6">
+            <div className="p-6 sm:p-8 flex flex-col gap-5 sm:gap-6">
 
-              {/* ── Row 1: Avatar + Name + Badge ── */}
+              
+
+              {/* ── Row 1: Avatar + Name ── */}
               <div className="flex items-center gap-4 sm:gap-5">
 
                 {/* Avatar */}
@@ -130,8 +141,6 @@ const HomePage = () => {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  {/* online dot */}
-                  <span className="absolute bottom-0.5 right-0.5 w-3 h-3 rounded-full bg-green-400 border-2 border-bg-secondary ring-1 ring-green-400/30" />
                 </div>
 
                 {/* Name + title */}
@@ -150,7 +159,6 @@ const HomePage = () => {
                   <p className="text-xs sm:text-sm text-yellow-500 font-mono">
                     Full-Stack Developer
                   </p>
-                  
                 </div>
               </div>
 
@@ -159,14 +167,24 @@ const HomePage = () => {
 
               {/* ── Row 2: Description ── */}
               <p className="text-sm sm:text-[15px] text-text-tertiary/80 leading-relaxed">
-                <Hl >SIH 2025 National Finalist</Hl> (Top 5) . I'm building production-ready apps with{' '}
+                <Hl>SIH 2025 National Finalist</Hl> (Top 5). Building production-ready apps with{' '}
                 <Hl>MERN stack</Hl>, <Hl>Python</Hl> &amp; <Hl>AI integrations</Hl>.{' '}
-                Solved <Hl>250+ LeetCode</Hl> problems.
+                Solved <Hl>260+ LeetCode</Hl> problems.
               </p>
 
-              
+              {/* ── Row 3: Stats ── */}
+              <div className="flex items-center justify-center divide-x divide-text-primary/8 py-1">
+                {STATS.map((s) => (
+                  <Stat key={s.label} value={s.value} label={s.label} />
+                ))}
+              </div>
 
-              
+              {/* ── Row 4: Tech stack pills ── */}
+              <div className="flex flex-wrap items-center gap-2 justify-center">
+                {STACK.map((tech) => (
+                  <Pill key={tech}>{tech}</Pill>
+                ))}
+              </div>
 
               {/* ── Divider ── */}
               <div className="h-px bg-text-primary/6" />
@@ -192,7 +210,10 @@ const HomePage = () => {
                 <motion.button
                   whileHover={{ scale: 1.03, y: -1 }}
                   whileTap={{ scale: 0.97 }}
-                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() => {
+                    playClick?.()
+                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+                  }}
                   className="flex-1 flex items-center justify-center gap-2 border border-text-primary/20 text-text-primary font-mono text-xs sm:text-sm py-3 rounded-xl hover:bg-bg-primary/60 transition-colors"
                 >
                   Let's Talk →
@@ -200,7 +221,7 @@ const HomePage = () => {
               </div>
 
               {/* ── Row 6: Social links ── */}
-              {/* <div className="flex items-center justify-center gap-5 sm:gap-6 pt-1">
+              <div className="flex items-center justify-center gap-6 sm:gap-7 pt-1">
                 {SOCIAL_LINKS.map((social) => {
                   const Icon = social.icon
                   return (
@@ -210,7 +231,7 @@ const HomePage = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={social.ariaLabel}
-                      whileHover={{ y: -3, opacity: 1 }}
+                      whileHover={{ y: -3 }}
                       className="flex flex-col items-center gap-1 text-text-primary/40 hover:text-text-primary transition-colors duration-200"
                     >
                       <span className="text-lg sm:text-xl"><Icon /></span>
@@ -218,7 +239,7 @@ const HomePage = () => {
                     </motion.a>
                   )
                 })}
-              </div> */}
+              </div>
 
             </div>{/* end card inner */}
 
