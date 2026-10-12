@@ -19,14 +19,9 @@ const slideUp = {
   hidden: { opacity: 0, y: 36 },
   show:   { opacity: 1, y: 0,  transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 }
-const fadeIn = {
-  hidden: { opacity: 0 },
-  show:   { opacity: 1,        transition: { duration: 0.9, ease: 'easeOut' } },
-}
-
 /* ── data ── */
 const STATS = [
-  { value: '260+', label: 'LeetCode' },
+  { value: '300+', label: 'LeetCode' },
   { value: 'Top 5', label: 'SIH 2025' },
   { value: '12+',   label: 'Shipped' },
 ]
@@ -82,18 +77,6 @@ const HomePage = () => {
         }}
       />
 
-      {/* ── subtle grid ── */}
-      <div
-        className="pointer-events-none fixed inset-0 z-0 opacity-[0.025]"
-        style={{
-          backgroundImage: `
-            linear-gradient(var(--text-primary) 1px, transparent 1px),
-            linear-gradient(90deg, var(--text-primary) 1px, transparent 1px)
-          `,
-          backgroundSize: '72px 72px',
-        }}
-      />
-
       <DesktopNavbar />
 
       {/* ══════════ HERO ══════════ */}
@@ -107,15 +90,15 @@ const HomePage = () => {
         {/* ── CARD ── */}
         <motion.div
           variants={slideUp}
-          className="w-full max-w-lg sm:max-w-xl"
+          className="w-full max-w-lg sm:max-w-2xl lg:max-w-3xl"
         >
-          <div className="relative rounded-3xl border border-text-primary/8 bg-bg-secondary/50 backdrop-blur-sm shadow-2xl overflow-hidden">
+          <div className="relative rounded-3xl border border-text-primary/15 bg-gradient-to-br from-bg-secondary/70 via-bg-primary to-bg-secondary/30 backdrop-blur-sm shadow-[0_24px_100px_rgba(255,255,255,0.06)] overflow-hidden">
 
             {/* card top accent line */}
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-text-primary/20 to-transparent" />
 
             {/* ── CARD INNER ── */}
-            <div className="p-6 sm:p-8 flex flex-col gap-5 sm:gap-6">
+            <div className="p-6 sm:p-9 lg:p-11 flex flex-col gap-5 sm:gap-7 lg:gap-8">
 
               
 
@@ -123,7 +106,7 @@ const HomePage = () => {
               <div className="flex items-center gap-4 sm:gap-5">
 
                 {/* Avatar */}
-                <div className="relative flex-shrink-0 w-[72px] h-[72px] sm:w-[90px] sm:h-[90px]">
+                <div className="relative flex-shrink-0 w-[88px] h-[88px] sm:w-[112px] sm:h-[112px] lg:w-[128px] lg:h-[128px]">
                   {/* spinning ring */}
                   <motion.div
                     animate={{ rotate: 360 }}
@@ -145,18 +128,17 @@ const HomePage = () => {
 
                 {/* Name + title */}
                 <div className="flex flex-col gap-1 min-w-0">
-                  <div className="overflow-hidden">
+                  <div>
                     <motion.h1
-                      initial={{ y: '100%' }}
-                      animate={{ y: 0 }}
-                      transition={{ duration: 0.75, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                      className="text-2xl sm:text-3xl font-black tracking-tight leading-none text-text-primary"
-                      style={{ fontFamily: "'Google Sans Code', monospace" }}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                      className="text-3xl sm:text-5xl lg:text-6xl font-normal tracking-normal leading-tight text-text-primary font-cursive"
                     >
                       Nikhil Chouksey
                     </motion.h1>
                   </div>
-                  <p className="text-xs sm:text-sm text-yellow-500 font-mono">
+                <p className="text-xs sm:text-sm text-yellow-400 font-mono tracking-wide">
                     Full-Stack Developer
                   </p>
                 </div>
@@ -166,10 +148,10 @@ const HomePage = () => {
               <div className="h-px bg-text-primary/6" />
 
               {/* ── Row 2: Description ── */}
-              <p className="text-sm sm:text-[15px] text-text-tertiary/80 leading-relaxed">
+              <p className="text-sm sm:text-base text-text-tertiary/80 leading-relaxed max-w-2xl">
                 <Hl>SIH 2025 National Finalist</Hl> (Top 5). Building production-ready apps with{' '}
                 <Hl>MERN stack</Hl>, <Hl>Python</Hl> &amp; <Hl>AI integrations</Hl>.{' '}
-                Solved <Hl>260+ LeetCode</Hl> problems.
+                Solved <Hl>300+ LeetCode</Hl> problems.
               </p>
 
               {/* ── Row 3: Stats ── */}
@@ -246,19 +228,6 @@ const HomePage = () => {
             {/* card bottom accent line */}
             <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-text-primary/10 to-transparent" />
           </div>
-        </motion.div>
-
-        {/* ── scroll hint ── */}
-        <motion.div
-          variants={fadeIn}
-          className="flex flex-col items-center gap-2 mt-8 opacity-20"
-        >
-          <span className="text-[9px] font-mono tracking-[0.3em] uppercase">scroll</span>
-          <motion.div
-            animate={{ y: [0, 7, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="w-px h-7 bg-text-primary"
-          />
         </motion.div>
 
       </motion.main>

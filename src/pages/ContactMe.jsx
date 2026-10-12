@@ -64,14 +64,11 @@ const ContactMe = () => {
         transition={{ duration: 0.6 }}
         className="text-center mb-10"
       >
-        <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-text-tertiary/60 block mb-2">
-          Let's connect
-        </span>
         <h2
           className="text-3xl sm:text-4xl font-black tracking-tight"
           style={{ fontFamily: "'Google Sans Code', monospace" }}
         >
-          Contact Me
+          Let's connect
         </h2>
         <div className="w-8 h-px bg-text-primary/20 mx-auto mt-4" />
       </motion.div>
