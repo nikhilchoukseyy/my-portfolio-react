@@ -54,8 +54,8 @@ const EducationPage = () => {
         className="text-center mb-14"
       >
         <h2
-          className="text-3xl sm:text-4xl font-black tracking-tight"
-          style={{ fontFamily: "'Google Sans Code', monospace" }}
+          className="text-4xl sm:text-5xl font-semibold tracking-tight"
+          style={{ fontFamily: "'Caveat', cursive" }}
         >
           Academic background
         </h2>

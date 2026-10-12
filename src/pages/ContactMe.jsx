@@ -65,8 +65,8 @@ const ContactMe = () => {
         className="text-center mb-10"
       >
         <h2
-          className="text-3xl sm:text-4xl font-black tracking-tight"
-          style={{ fontFamily: "'Google Sans Code', monospace" }}
+          className="text-4xl sm:text-5xl font-semibold tracking-tight"
+          style={{ fontFamily: "'Caveat', cursive" }}
         >
           Let's connect
         </h2>

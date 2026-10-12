@@ -95,7 +95,7 @@ const SkillsPage = () => {
         transition={{ duration: 0.6 }}
         className="text-center mb-12"
       >
-        <h2 className="text-3xl sm:text-4xl font-black tracking-tight" style={{ fontFamily: "'Google Sans Code', monospace" }}>
+        <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight" style={{ fontFamily: "'Caveat', cursive" }}>
           What I work with
         </h2>
         <div className="w-8 h-px bg-text-primary/20 mx-auto mt-4" />
