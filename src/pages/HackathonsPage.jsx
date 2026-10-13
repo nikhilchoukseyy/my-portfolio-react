@@ -51,9 +51,8 @@ export default function HackathonsPage() {
   return (
     <main className="min-h-screen border-x-2 border-dotted border-bg-tertiary bg-bg-primary px-5 py-20 text-text-primary sm:px-8 sm:py-28">
       <div className="mx-auto max-w-6xl">
-        <Motion.header initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 flex flex-col justify-between gap-5 sm:mb-16 sm:flex-row sm:items-end">
-          <div><p className="mb-3 font-mono text-xs uppercase tracking-[.25em] text-text-tertiary">Build · learn · repeat</p><h2 className="text-4xl font-semibold tracking-tight sm:text-6xl">Hackathon journal<span className="text-text-tertiary">.</span></h2><p className="mt-4 max-w-xl text-sm leading-relaxed text-text-primary/50 sm:text-base">Ideas built under a deadline, new teammates, and the little moments that made each event memorable.</p></div>
-          <p className="font-mono text-xs text-text-primary/35">{String(hackathons.length).padStart(2, '0')} STORIES</p>
+        <Motion.header initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 sm:mb-16">
+          <h2 className="text-center text-4xl font-semibold tracking-tight sm:text-5xl" style={{ fontFamily: "'Caveat', cursive" }}>Hackathon journal</h2>
         </Motion.header>
         {hackathons.length ? <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {hackathons.map((item, index) => <Motion.button key={item.id || item.title} type="button" onClick={() => setSelected(item)} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * .07 }} className="group overflow-hidden rounded-2xl border border-text-primary/10 bg-bg-secondary text-left transition duration-300 hover:-translate-y-1 hover:border-text-primary/25 hover:shadow-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-text-tertiary">

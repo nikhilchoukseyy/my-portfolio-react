@@ -14,6 +14,40 @@ create table if not exists public.projects (
   created_at timestamptz not null default now()
 );
 
+create table if not exists public.experience_entries (
+  id uuid primary key default gen_random_uuid(),
+  role text not null,
+  organization text not null,
+  start_date date,
+  end_date date,
+  description text not null default '',
+  photos jsonb not null default '[]'::jsonb,
+  position integer not null default 0,
+  created_at timestamptz not null default now()
+);
+
+alter table public.experience_entries enable row level security;
+
+drop policy if exists "Anyone can read portfolio experience" on public.experience_entries;
+create policy "Anyone can read portfolio experience"
+  on public.experience_entries for select using (true);
+
+drop policy if exists "Portfolio admin can insert experience" on public.experience_entries;
+create policy "Portfolio admin can insert experience"
+  on public.experience_entries for insert to authenticated
+  with check ((select auth.jwt() ->> 'email') = 'admin@example.com');
+
+drop policy if exists "Portfolio admin can update experience" on public.experience_entries;
+create policy "Portfolio admin can update experience"
+  on public.experience_entries for update to authenticated
+  using ((select auth.jwt() ->> 'email') = 'admin@example.com')
+  with check ((select auth.jwt() ->> 'email') = 'admin@example.com');
+
+drop policy if exists "Portfolio admin can delete experience" on public.experience_entries;
+create policy "Portfolio admin can delete experience"
+  on public.experience_entries for delete to authenticated
+  using ((select auth.jwt() ->> 'email') = 'admin@example.com');
+
 create table if not exists public.hackathons (
   id uuid primary key default gen_random_uuid(),
   title text not null,

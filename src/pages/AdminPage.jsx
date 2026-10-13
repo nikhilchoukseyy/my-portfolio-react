@@ -3,9 +3,41 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import { isSupabaseConfigured, supabase } from '../lib/supabase'
 import { deleteProject, getProjects, importDefaultProjects, saveProject, updateProjectOrder, uploadProjectImage } from '../lib/projects'
 import { deleteHackathon, getHackathons, saveHackathon, uploadHackathonImage } from '../lib/hackathons'
+import { deleteExperience, getExperience, saveExperience, uploadExperiencePhoto } from '../lib/experience'
 
 const emptyProject = { title: '', desc: '', live: '', github: '', image: '', accent: ['#7c3aed', '#06b6d4'], tags: [] }
 const emptyHackathon = { title: '', description: '', longDescription: '', date: '', photos: [], links: [] }
+const emptyExperience = { role: '', organization: '', startDate: '', endDate: '', current: true, description: '', photos: [] }
+
+function ExperienceForm({ entry, onSave, onCancel, busy }) {
+  const [draft, setDraft] = useState({ ...emptyExperience, ...entry })
+  const [photoBusy, setPhotoBusy] = useState(false)
+  const [photoError, setPhotoError] = useState('')
+  const set = (key, value) => setDraft(current => ({ ...current, [key]: value }))
+  async function addPhotos(event) {
+    const files = [...(event.target.files || [])]
+    if (!files.length) return
+    if (files.some(file => !file.type.startsWith('image/'))) { setPhotoError('Choose image files only.'); return }
+    setPhotoBusy(true); setPhotoError('')
+    try { const uploaded = await Promise.all(files.map(uploadExperiencePhoto)); const existing = Array.isArray(draft.photos) ? draft.photos : draft.photos.split('\n').map(url => url.trim()).filter(Boolean); set('photos', [...existing, ...uploaded]) }
+    catch (cause) { setPhotoError(cause.message || 'Photo upload failed.') }
+    finally { setPhotoBusy(false); event.target.value = '' }
+  }
+  const photosText = Array.isArray(draft.photos) ? draft.photos.join('\n') : draft.photos || ''
+  return <form onSubmit={event => { event.preventDefault(); onSave({ ...draft, photos: typeof draft.photos === 'string' ? draft.photos.split('\n').map(url => url.trim()).filter(Boolean) : draft.photos }) }} className="grid gap-4 rounded-xl border border-text-primary/10 bg-bg-primary p-5 md:grid-cols-2">
+    <label className="text-sm">Position / role<input required value={draft.role} onChange={event => set('role', event.target.value)} placeholder="Software Engineer Intern" className="mt-1 w-full rounded-lg border border-text-primary/15 bg-bg-secondary px-3 py-2" /></label>
+    <label className="text-sm">Company / organization<input required value={draft.organization} onChange={event => set('organization', event.target.value)} className="mt-1 w-full rounded-lg border border-text-primary/15 bg-bg-secondary px-3 py-2" /></label>
+    <label className="text-sm">Start date<input required type="date" value={draft.startDate || ''} onChange={event => set('startDate', event.target.value)} className="mt-1 w-full rounded-lg border border-text-primary/15 bg-bg-secondary px-3 py-2" /></label>
+    <label className="flex items-center gap-2 self-end pb-2 text-sm"><input type="checkbox" checked={Boolean(draft.current)} onChange={event => { set('current', event.target.checked); if (event.target.checked) set('endDate', '') }} /> I currently work here</label>
+    {!draft.current && <label className="text-sm">End date<input required type="date" value={draft.endDate || ''} onChange={event => set('endDate', event.target.value)} className="mt-1 w-full rounded-lg border border-text-primary/15 bg-bg-secondary px-3 py-2" /></label>}
+    <label className="text-sm md:col-span-2">What you worked on<textarea rows="8" value={draft.description} onChange={event => set('description', event.target.value)} placeholder="Describe your work. Leave a blank line between paragraphs to place photos between them." className="mt-1 w-full rounded-lg border border-text-primary/15 bg-bg-secondary px-3 py-2" /></label>
+    <label className="text-sm md:col-span-2">Photo URLs (one per line)<textarea rows="3" value={photosText} onChange={event => set('photos', event.target.value)} className="mt-1 w-full rounded-lg border border-text-primary/15 bg-bg-secondary px-3 py-2" /></label>
+    <label className="text-sm">Upload photos<input type="file" multiple accept="image/*" onChange={addPhotos} className="mt-2 block w-full text-sm" /></label>
+    <div className="flex flex-wrap gap-2">{(Array.isArray(draft.photos) ? draft.photos : []).map((photo, index) => <div key={`${photo}-${index}`} className="relative"><img src={photo} alt={`Experience photo ${index + 1}`} className="h-16 w-20 rounded-md object-cover" /><button type="button" aria-label={`Remove photo ${index + 1}`} onClick={() => set('photos', draft.photos.filter((_, photoIndex) => photoIndex !== index))} className="absolute -right-2 -top-2 rounded-full bg-bg-primary px-1.5">×</button></div>)}</div>
+    {(photoBusy || photoError) && <p className="text-sm text-text-tertiary md:col-span-2">{photoBusy ? 'Uploading photos…' : photoError}</p>}
+    <div className="flex gap-3 md:col-span-2"><button disabled={busy || photoBusy} className="rounded-lg bg-text-primary px-4 py-2 font-medium text-bg-primary disabled:opacity-50">{busy ? 'Saving…' : 'Save experience'}</button><button type="button" onClick={onCancel} className="rounded-lg border border-text-primary/20 px-4 py-2">Cancel</button></div>
+  </form>
+}
 
 function HackathonForm({ hackathon, onSave, onCancel, busy }) {
   const [draft, setDraft] = useState({ ...emptyHackathon, ...hackathon })
@@ -77,8 +109,10 @@ export default function AdminPage() {
   const [signedIn, setSignedIn] = useState(false)
   const [projects, setProjects] = useState([])
   const [hackathons, setHackathons] = useState([])
+  const [experience, setExperience] = useState([])
   const [editing, setEditing] = useState(null)
   const [editingHackathon, setEditingHackathon] = useState(null)
+  const [editingExperience, setEditingExperience] = useState(null)
   const [busy, setBusy] = useState(false)
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
@@ -92,6 +126,10 @@ export default function AdminPage() {
     try { setHackathons(await getHackathons()) }
     catch (cause) { setError(cause.message || 'Could not load hackathons. Check your Supabase setup and SQL.') }
   }, [])
+  const loadExperience = useCallback(async () => {
+    try { setExperience(await getExperience()) }
+    catch (cause) { setError(cause.message || 'Could not load experience entries. Check your Supabase setup and SQL.') }
+  }, [])
 
   useEffect(() => {
     if (!supabase) { setSessionReady(true); return undefined }
@@ -99,7 +137,7 @@ export default function AdminPage() {
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => setSignedIn(Boolean(session)))
     return () => listener.subscription.unsubscribe()
   }, [])
-  useEffect(() => { if (signedIn) { loadProjects(); loadHackathons() } }, [signedIn, loadProjects, loadHackathons])
+  useEffect(() => { if (signedIn) { loadProjects(); loadHackathons(); loadExperience() } }, [signedIn, loadProjects, loadHackathons, loadExperience])
 
   if (!isSupabaseConfigured) return <Navigate to="/admin/login" replace />
   if (!sessionReady) return <div className="min-h-screen bg-bg-primary" />
@@ -107,7 +145,7 @@ export default function AdminPage() {
 
   async function run(action, success) {
     setBusy(true); setError(''); setMessage('')
-    try { await action(); await loadProjects(); await loadHackathons(); setEditing(null); setEditingHackathon(null); setMessage(success) }
+    try { await action(); await loadProjects(); await loadHackathons(); await loadExperience(); setEditing(null); setEditingHackathon(null); setEditingExperience(null); setMessage(success) }
     catch (cause) { setError(cause.message || 'The change could not be saved.') }
     finally { setBusy(false) }
   }
@@ -146,6 +184,11 @@ export default function AdminPage() {
           </article>)}
           {!projects.length && !error && <p className="rounded-xl border border-dashed border-text-primary/20 p-8 text-center text-sm opacity-60">No projects yet. Import the current list or add your first project.</p>}
         </div>
+        <section className="mt-14 border-t border-text-primary/10 pt-8">
+          <div className="mb-5 flex flex-wrap items-end justify-between gap-3"><div><h2 className="text-2xl font-semibold">Experience</h2><p className="mt-1 text-sm opacity-60">Positions, dates, work descriptions, and photos.</p></div><button onClick={() => { setEditing(null); setEditingHackathon(null); setEditingExperience({ ...emptyExperience }) }} className="rounded-lg bg-text-primary px-4 py-2 font-medium text-bg-primary">+ Add experience</button></div>
+          {editingExperience && <div className="mb-7"><h3 className="mb-3 text-lg font-medium">{editingExperience.id ? 'Edit experience' : 'Add experience'}</h3><ExperienceForm entry={editingExperience} busy={busy} onCancel={() => setEditingExperience(null)} onSave={entry => run(() => saveExperience({ ...entry, position: entry.position ?? experience.length }), editingExperience.id ? 'Experience saved.' : 'Experience added.')} /></div>}
+          <div className="space-y-3">{experience.map(entry => <article key={entry.id} className="flex flex-wrap items-center gap-4 rounded-xl border border-text-primary/10 bg-bg-secondary p-4">{entry.photos?.[0] && <img src={entry.photos[0]} alt="" className="h-14 w-20 rounded-md object-cover" />}<div className="min-w-40 flex-1"><h3 className="font-medium">{entry.role} · {entry.organization}</h3><p className="line-clamp-1 text-sm opacity-60">{entry.startDate || 'Start date not set'} – {entry.endDate || 'Present'}</p></div><div className="flex gap-2"><button onClick={() => { setEditing(null); setEditingHackathon(null); setEditingExperience({ ...entry }) }} className="rounded border border-text-primary/15 px-3 py-2">Edit</button><button onClick={() => { if (window.confirm(`Delete “${entry.role} at ${entry.organization}”?`)) run(() => deleteExperience(entry.id), 'Experience entry deleted.') }} disabled={busy} className="rounded border border-red-400/30 px-3 py-2 text-red-300 disabled:opacity-50">Delete</button></div></article>)}{!experience.length && !error && <p className="rounded-xl border border-dashed border-text-primary/20 p-8 text-center text-sm opacity-60">No experience entries yet. Add your first role above.</p>}</div>
+        </section>
         <section className="mt-14 border-t border-text-primary/10 pt-8">
           <div className="mb-5 flex flex-wrap items-end justify-between gap-3"><div><h2 className="text-2xl font-semibold">Hackathons</h2><p className="mt-1 text-sm opacity-60">Stories, dates, photos, and useful links.</p></div><button onClick={() => { setEditing(null); setEditingHackathon({ ...emptyHackathon }) }} className="rounded-lg bg-text-primary px-4 py-2 font-medium text-bg-primary">+ Add hackathon</button></div>
           {editingHackathon && <div className="mb-7"><h3 className="mb-3 text-lg font-medium">{editingHackathon.id ? 'Edit hackathon' : 'Add hackathon'}</h3><HackathonForm hackathon={editingHackathon} busy={busy} onCancel={() => setEditingHackathon(null)} onSave={entry => run(() => saveHackathon({ ...entry, position: entry.position ?? hackathons.length }), editingHackathon.id ? 'Hackathon saved.' : 'Hackathon added.')} /></div>}

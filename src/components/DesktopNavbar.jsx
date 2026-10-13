@@ -7,12 +7,14 @@ import { FaTools } from "react-icons/fa";
 import { FaUniversity } from "react-icons/fa";
 import { MdContactEmergency } from "react-icons/md";
 import { FaTrophy } from "react-icons/fa";
+import { FiBriefcase } from "react-icons/fi";
 import useScrollDirection from '../hooks/useScrollDirection'
 import { useTheme } from '../context/ThemeContext';
 import { Moon, Sun } from 'lucide-react';
 
 const tabs = [
   { id: 'home',      label: 'Home',      link: '/',          icon: <IoMdHome /> },
+  { id: 'experience', label: 'Experience', link: '/experience', icon: <FiBriefcase /> },
   { id: 'projects',  label: 'Projects',  link: '/projects',  icon: <GoProjectRoadmap /> },
   { id: 'hackathons', label: 'Hackathons', link: '/hackathons', icon: <FaTrophy /> },
   { id: 'skills',    label: 'Skills',    link: '/skills',    icon: <FaTools /> },
