@@ -1,13 +1,23 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
-import { PROJECTS } from '../config/projects.config'
+import { getProjects } from '../lib/projects'
 import { FiExternalLink, FiGithub } from 'react-icons/fi'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const ProjectCard = () => {
+  const [projects, setProjects] = useState([])
+  const [loadError, setLoadError] = useState('')
+
+  useEffect(() => {
+    let active = true
+    getProjects().then(data => { if (active) setProjects(data) })
+      .catch(() => { if (active) setLoadError('Projects are temporarily unavailable.') })
+    return () => { active = false }
+  }, [])
+
   useEffect(() => {
     const cards = gsap.utils.toArray('.projectcard')
     cards.forEach(card => {
@@ -24,7 +34,7 @@ const ProjectCard = () => {
       })
     })
     return () => ScrollTrigger.getAll().forEach(t => t.kill())
-  }, [])
+  }, [projects])
 
   return (
     <main className="bg-bg-primary border-bg-tertiary border-dotted border-2 border-t-0 text-text-primary flex flex-col items-center min-h-screen px-4 sm:px-6 py-12">
@@ -48,11 +58,11 @@ const ProjectCard = () => {
 
       {/* Stacked cards */}
       <div className="flex flex-col gap-5 w-full max-w-2xl lg:max-w-5xl pb-[55dvh]">
-        {PROJECTS.map((p, i) => (
+        {projects.map((p, i) => (
           <div
             key={p.title}
             className={`projectcard rounded-2xl bg-bg-secondary border border-text-primary/6 overflow-hidden shadow-xl lg:min-h-[360px]
-              ${i === PROJECTS.length - 1 ? 'relative' : 'sticky top-[12dvh]'}`}
+                ${i === projects.length - 1 ? 'relative' : 'sticky top-[12dvh]'}`}
           >
             {/* Index label */}
             <div className="absolute top-4 right-4 z-10">
@@ -119,6 +129,7 @@ const ProjectCard = () => {
           </div>
         ))}
       </div>
+      {loadError && <p role="status" className="text-sm text-text-tertiary">{loadError}</p>}
     </main>
   )
 }
