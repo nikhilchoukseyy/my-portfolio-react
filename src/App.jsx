@@ -7,6 +7,7 @@ import SkillsPage from './pages/SkillsPage'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import AdminLogin from './pages/AdminLogin'
 import AdminPage from './pages/AdminPage'
+import HackathonsPage from './pages/HackathonsPage'
 
 
 
@@ -18,6 +19,7 @@ function App() {
       <Route path="*" element={<div>
       <section id='home' className='min-h-screen'><HomePage /></section>
       <section id='projects' className='min-h-screen'><ProjectPage /></section>
+      <section id='hackathons' className='min-h-screen'><HackathonsPage /></section>
       <section id='skills' className='min-h-screen'><SkillsPage /></section>
       <section id='education' className='min-h-screen'><EducationPage /></section>
       <section id='contact' className='min-h-screen'><ContactMe /></section>

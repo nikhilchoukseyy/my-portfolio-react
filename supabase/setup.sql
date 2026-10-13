@@ -14,6 +14,40 @@ create table if not exists public.projects (
   created_at timestamptz not null default now()
 );
 
+create table if not exists public.hackathons (
+  id uuid primary key default gen_random_uuid(),
+  title text not null,
+  description text not null default '',
+  long_description text not null default '',
+  event_date date,
+  photos jsonb not null default '[]'::jsonb,
+  links jsonb not null default '[]'::jsonb,
+  position integer not null default 0,
+  created_at timestamptz not null default now()
+);
+
+alter table public.hackathons enable row level security;
+
+drop policy if exists "Anyone can read portfolio hackathons" on public.hackathons;
+create policy "Anyone can read portfolio hackathons"
+  on public.hackathons for select using (true);
+
+drop policy if exists "Portfolio admin can insert hackathons" on public.hackathons;
+create policy "Portfolio admin can insert hackathons"
+  on public.hackathons for insert to authenticated
+  with check ((select auth.jwt() ->> 'email') = 'admin@example.com');
+
+drop policy if exists "Portfolio admin can update hackathons" on public.hackathons;
+create policy "Portfolio admin can update hackathons"
+  on public.hackathons for update to authenticated
+  using ((select auth.jwt() ->> 'email') = 'admin@example.com')
+  with check ((select auth.jwt() ->> 'email') = 'admin@example.com');
+
+drop policy if exists "Portfolio admin can delete hackathons" on public.hackathons;
+create policy "Portfolio admin can delete hackathons"
+  on public.hackathons for delete to authenticated
+  using ((select auth.jwt() ->> 'email') = 'admin@example.com');
+
 alter table public.projects enable row level security;
 
 drop policy if exists "Anyone can read portfolio projects" on public.projects;

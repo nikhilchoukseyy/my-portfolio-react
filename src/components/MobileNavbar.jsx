@@ -5,6 +5,7 @@ import { IoMdHome } from 'react-icons/io'
 import { GoProjectRoadmap } from 'react-icons/go'
 import { FaTools, FaUniversity } from 'react-icons/fa'
 import { MdContactEmergency } from 'react-icons/md'
+import { FaTrophy } from 'react-icons/fa'
 import useScrollDirection from '../hooks/useScrollDirection'
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
@@ -13,6 +14,7 @@ import { useTheme } from '../context/ThemeContext';
 const tabs = [
   { id: 'home', label: 'Home', link: '/', icon: <IoMdHome /> },
   { id: 'projects', label: 'Projects', link: '/projects', icon: <GoProjectRoadmap /> },
+  { id: 'hackathons', label: 'Hackathons', link: '/hackathons', icon: <FaTrophy /> },
   { id: 'skills', label: 'Skills', link: '/skills', icon: <FaTools /> },
   { id: 'education', label: 'Education', link: '/education', icon: <FaUniversity /> },
   { id: 'contact', label: 'Contact', link: '/contact', icon: <MdContactEmergency /> },
@@ -53,7 +55,7 @@ const MobileNavbar = () => {
       initial={{ y: 100 }}
       animate={{ y: scrollUp ? 0 : 100 }}
       transition={{ type: 'tween', duration: 0.5 }}
-      className="w-full h-auto sm:hidden flex justify-center items-center text-center px-4 py-2 bg-bg-primary/90 backdrop-blur-xl gap-8 fixed bottom-0 z-50">
+      className="w-full h-auto sm:hidden flex justify-center items-center text-center px-3 py-2 bg-bg-primary/90 backdrop-blur-xl gap-6 fixed bottom-0 z-50">
       {tabs.map((tab) => (
         <button
           key={tab.id}

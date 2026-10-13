@@ -2,8 +2,40 @@ import { useCallback, useEffect, useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { isSupabaseConfigured, supabase } from '../lib/supabase'
 import { deleteProject, getProjects, importDefaultProjects, saveProject, updateProjectOrder, uploadProjectImage } from '../lib/projects'
+import { deleteHackathon, getHackathons, saveHackathon, uploadHackathonImage } from '../lib/hackathons'
 
 const emptyProject = { title: '', desc: '', live: '', github: '', image: '', accent: ['#7c3aed', '#06b6d4'], tags: [] }
+const emptyHackathon = { title: '', description: '', longDescription: '', date: '', photos: [], links: [] }
+
+function HackathonForm({ hackathon, onSave, onCancel, busy }) {
+  const [draft, setDraft] = useState({ ...emptyHackathon, ...hackathon })
+  const [imageBusy, setImageBusy] = useState(false)
+  const [imageError, setImageError] = useState('')
+  const set = (key, value) => setDraft(current => ({ ...current, [key]: value }))
+  async function addPhotos(event) {
+    const files = [...(event.target.files || [])]
+    if (!files.length) return
+    if (files.some(file => !file.type.startsWith('image/'))) { setImageError('Choose image files only.'); return }
+    setImageBusy(true); setImageError('')
+    try { const uploaded = await Promise.all(files.map(uploadHackathonImage)); const existing = Array.isArray(draft.photos) ? draft.photos : draft.photos.split('\n').map(url => url.trim()).filter(Boolean); set('photos', [...existing, ...uploaded]) }
+    catch (cause) { setImageError(cause.message || 'Image upload failed.') }
+    finally { setImageBusy(false); event.target.value = '' }
+  }
+  const photosText = Array.isArray(draft.photos) ? draft.photos.join('\n') : draft.photos || ''
+  const linksText = Array.isArray(draft.links) ? draft.links.map(link => `${link.label} | ${link.url}`).join('\n') : draft.links || ''
+  return <form onSubmit={event => { event.preventDefault(); onSave({ ...draft, photos: typeof draft.photos === 'string' ? draft.photos.split('\n').map(url => url.trim()).filter(Boolean) : draft.photos, links: typeof draft.links === 'string' ? draft.links.split('\n').map(line => { const [label, ...url] = line.split('|'); return { label: label.trim(), url: url.join('|').trim() } }).filter(link => link.label && link.url) : draft.links }) }} className="grid gap-4 rounded-xl border border-text-primary/10 bg-bg-primary p-5 md:grid-cols-2">
+    <label className="text-sm">Event name<input required value={draft.title} onChange={event => set('title', event.target.value)} className="mt-1 w-full rounded-lg border border-text-primary/15 bg-bg-secondary px-3 py-2" /></label>
+    <label className="text-sm">Event date<input type="date" value={draft.date || ''} onChange={event => set('date', event.target.value)} className="mt-1 w-full rounded-lg border border-text-primary/15 bg-bg-secondary px-3 py-2" /></label>
+    <label className="text-sm md:col-span-2">Card description<textarea rows="2" value={draft.description} onChange={event => set('description', event.target.value)} className="mt-1 w-full rounded-lg border border-text-primary/15 bg-bg-secondary px-3 py-2" /></label>
+    <label className="text-sm md:col-span-2">Full story<textarea rows="8" value={draft.longDescription} onChange={event => set('longDescription', event.target.value)} placeholder="Write your story. Leave a blank line between paragraphs; photos will appear between them." className="mt-1 w-full rounded-lg border border-text-primary/15 bg-bg-secondary px-3 py-2" /></label>
+    <label className="text-sm md:col-span-2">Photo URLs (one per line)<textarea rows="3" value={photosText} onChange={event => set('photos', event.target.value)} className="mt-1 w-full rounded-lg border border-text-primary/15 bg-bg-secondary px-3 py-2" /></label>
+    <label className="text-sm">Upload photos<input type="file" multiple accept="image/*" onChange={addPhotos} className="mt-2 block w-full text-sm" /></label>
+    <div className="flex flex-wrap gap-2">{(Array.isArray(draft.photos) ? draft.photos : []).map((photo, index) => <div key={`${photo}-${index}`} className="relative"><img src={photo} alt={`Photo ${index + 1}`} className="h-16 w-20 rounded-md object-cover" /><button type="button" aria-label={`Remove photo ${index + 1}`} onClick={() => set('photos', draft.photos.filter((_, photoIndex) => photoIndex !== index))} className="absolute -right-2 -top-2 rounded-full bg-bg-primary px-1.5">×</button></div>)}</div>
+    <label className="text-sm md:col-span-2">Links (one per line: Label | URL)<textarea rows="3" value={linksText} onChange={event => set('links', event.target.value)} placeholder={'Project | https://…\nEvent page | https://…'} className="mt-1 w-full rounded-lg border border-text-primary/15 bg-bg-secondary px-3 py-2" /></label>
+    {(imageBusy || imageError) && <p className="text-sm text-text-tertiary md:col-span-2">{imageBusy ? 'Uploading photos…' : imageError}</p>}
+    <div className="flex gap-3 md:col-span-2"><button disabled={busy || imageBusy} className="rounded-lg bg-text-primary px-4 py-2 font-medium text-bg-primary disabled:opacity-50">{busy ? 'Saving…' : 'Save hackathon'}</button><button type="button" onClick={onCancel} className="rounded-lg border border-text-primary/20 px-4 py-2">Cancel</button></div>
+  </form>
+}
 
 function ProjectForm({ project, onSave, onCancel, busy }) {
   const [draft, setDraft] = useState({ ...emptyProject, ...project })
@@ -44,7 +76,9 @@ export default function AdminPage() {
   const [sessionReady, setSessionReady] = useState(false)
   const [signedIn, setSignedIn] = useState(false)
   const [projects, setProjects] = useState([])
+  const [hackathons, setHackathons] = useState([])
   const [editing, setEditing] = useState(null)
+  const [editingHackathon, setEditingHackathon] = useState(null)
   const [busy, setBusy] = useState(false)
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
@@ -54,6 +88,10 @@ export default function AdminPage() {
     try { setProjects(await getProjects()) }
     catch (cause) { setError(cause.message || 'Could not load projects. Check your Supabase setup and SQL.') }
   }, [])
+  const loadHackathons = useCallback(async () => {
+    try { setHackathons(await getHackathons()) }
+    catch (cause) { setError(cause.message || 'Could not load hackathons. Check your Supabase setup and SQL.') }
+  }, [])
 
   useEffect(() => {
     if (!supabase) { setSessionReady(true); return undefined }
@@ -61,7 +99,7 @@ export default function AdminPage() {
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => setSignedIn(Boolean(session)))
     return () => listener.subscription.unsubscribe()
   }, [])
-  useEffect(() => { if (signedIn) loadProjects() }, [signedIn, loadProjects])
+  useEffect(() => { if (signedIn) { loadProjects(); loadHackathons() } }, [signedIn, loadProjects, loadHackathons])
 
   if (!isSupabaseConfigured) return <Navigate to="/admin/login" replace />
   if (!sessionReady) return <div className="min-h-screen bg-bg-primary" />
@@ -69,7 +107,7 @@ export default function AdminPage() {
 
   async function run(action, success) {
     setBusy(true); setError(''); setMessage('')
-    try { await action(); await loadProjects(); setEditing(null); setMessage(success) }
+    try { await action(); await loadProjects(); await loadHackathons(); setEditing(null); setEditingHackathon(null); setMessage(success) }
     catch (cause) { setError(cause.message || 'The change could not be saved.') }
     finally { setBusy(false) }
   }
@@ -89,7 +127,7 @@ export default function AdminPage() {
     <main className="min-h-screen bg-bg-primary px-4 py-8 text-text-primary sm:px-8">
       <div className="mx-auto max-w-5xl">
         <header className="mb-8 flex flex-wrap items-center justify-between gap-4">
-          <div><a href="/" className="text-sm text-text-tertiary">← View portfolio</a><h1 className="mt-2 text-3xl font-semibold">Portfolio admin</h1><p className="mt-1 text-sm opacity-60">Manage projects shown on your portfolio.</p></div>
+          <div><a href="/" className="text-sm text-text-tertiary">← View portfolio</a><h1 className="mt-2 text-3xl font-semibold">Portfolio admin</h1><p className="mt-1 text-sm opacity-60">Manage projects and hackathon stories.</p></div>
           <button onClick={logout} className="rounded-lg border border-text-primary/20 px-4 py-2 text-sm">Sign out</button>
         </header>
         {message && <p role="status" className="mb-4 rounded-lg bg-emerald-500/10 p-3 text-sm text-emerald-300">{message}</p>}
@@ -108,6 +146,11 @@ export default function AdminPage() {
           </article>)}
           {!projects.length && !error && <p className="rounded-xl border border-dashed border-text-primary/20 p-8 text-center text-sm opacity-60">No projects yet. Import the current list or add your first project.</p>}
         </div>
+        <section className="mt-14 border-t border-text-primary/10 pt-8">
+          <div className="mb-5 flex flex-wrap items-end justify-between gap-3"><div><h2 className="text-2xl font-semibold">Hackathons</h2><p className="mt-1 text-sm opacity-60">Stories, dates, photos, and useful links.</p></div><button onClick={() => { setEditing(null); setEditingHackathon({ ...emptyHackathon }) }} className="rounded-lg bg-text-primary px-4 py-2 font-medium text-bg-primary">+ Add hackathon</button></div>
+          {editingHackathon && <div className="mb-7"><h3 className="mb-3 text-lg font-medium">{editingHackathon.id ? 'Edit hackathon' : 'Add hackathon'}</h3><HackathonForm hackathon={editingHackathon} busy={busy} onCancel={() => setEditingHackathon(null)} onSave={entry => run(() => saveHackathon({ ...entry, position: entry.position ?? hackathons.length }), editingHackathon.id ? 'Hackathon saved.' : 'Hackathon added.')} /></div>}
+          <div className="space-y-3">{hackathons.map(item => <article key={item.id} className="flex flex-wrap items-center gap-4 rounded-xl border border-text-primary/10 bg-bg-secondary p-4">{item.photos?.[0] && <img src={item.photos[0]} alt="" className="h-14 w-20 rounded-md object-cover" />}<div className="min-w-40 flex-1"><h3 className="font-medium">{item.title}</h3><p className="line-clamp-1 text-sm opacity-60">{item.date || 'Date not set'} · {item.description}</p></div><div className="flex gap-2"><button onClick={() => { setEditing(null); setEditingHackathon({ ...item }) }} className="rounded border border-text-primary/15 px-3 py-2">Edit</button><button onClick={() => { if (window.confirm(`Delete “${item.title}”?`)) run(() => deleteHackathon(item.id), 'Hackathon deleted.') }} disabled={busy} className="rounded border border-red-400/30 px-3 py-2 text-red-300 disabled:opacity-50">Delete</button></div></article>)}{!hackathons.length && !error && <p className="rounded-xl border border-dashed border-text-primary/20 p-8 text-center text-sm opacity-60">No hackathons yet. Add your first story above.</p>}</div>
+        </section>
       </div>
     </main>
   )
